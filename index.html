@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="戸籍から江戸末期までたどる本格家系図作成。無料相談（オンライン・最大60分）受付中。">
+<meta name="description" content="一生に一度の本格家系図作成。無料相談（オンライン・最大60分）受付中。">
 <title>結び 家系図</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,9 +62,9 @@ section{padding-block:88px}
 .hero .note{display:flex;align-items:center;gap:12px;margin:26px 0 30px;font-family:var(--mincho);font-size:13px;letter-spacing:.2em;color:#CFCBC0}
 .hero .note::before,.hero .note::after{content:"";width:28px;height:1px;background:var(--gold)}
 .cta-sub{display:block;margin-top:14px;font-size:12px;color:#B9B4A7;letter-spacing:.1em}
-.scroll{position:relative;background:var(--washi);border:1px solid #CDBF9F;padding:22px 14px;box-shadow:0 30px 60px rgba(0,0,0,.45);transform:rotate(-2.5deg);max-width:100%}
-.scroll::before,.scroll::after{content:"";position:absolute;left:-10px;right:-10px;height:14px;background:linear-gradient(180deg,#5A3E1E,#2E1F0F);border-radius:7px}
-.scroll::before{top:-9px}.scroll::after{bottom:-9px}
+.scroll{position:relative;background:#0E1326;border:1px solid #3A4266;padding:18px;border-radius:4px;box-shadow:0 30px 60px rgba(0,0,0,.45);transform:rotate(-2.5deg);max-width:100%}
+.scroll::before{content:"";position:absolute;inset:8px;border:1px solid rgba(212,184,120,.55);pointer-events:none}
+.scroll::after{content:"A3 証書ファイル";position:absolute;right:18px;bottom:-26px;font-family:var(--mincho);font-size:11px;letter-spacing:.3em;color:#B9B4A7}
 .scroll svg{display:block;width:100%;height:auto}
 
 /* thoughts */
@@ -204,6 +204,17 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
 .btn-gold{background:var(--gold);color:var(--ai-deep);padding:15px 28px;font-size:16px;box-shadow:0 5px 0 var(--gold-dk)}
 .btn-gold:hover{transform:translateY(2px);box-shadow:0 3px 0 var(--gold-dk)}
 @media (max-width:640px){.app{grid-template-columns:1fr;padding:26px 20px}.app .btn{width:100%}}
+.once{background:linear-gradient(180deg,var(--ai-deep),var(--ai));color:#EDE8DC;text-align:center}
+.once .big{font-family:var(--mincho);font-weight:800;font-size:clamp(34px,6vw,60px);letter-spacing:.12em;line-height:1.35;color:#F3EEE2;text-wrap:balance}
+.once .big em{font-style:normal;color:var(--gold-lt)}
+.once .lead{color:#CFCBC0;margin-top:22px}
+.gens{display:grid;grid-template-columns:repeat(3,1fr);margin:48px auto 0;max-width:900px;border-top:1px solid rgba(212,184,120,.4);border-bottom:1px solid rgba(212,184,120,.4)}
+.gens div{padding:30px 20px}
+.gens div+div{border-left:1px solid rgba(212,184,120,.4)}
+.gens .y{font-family:var(--mincho);font-size:13px;letter-spacing:.3em;color:var(--gold-lt)}
+.gens b{display:block;font-family:var(--mincho);font-size:19px;margin:8px 0 6px;letter-spacing:.1em}
+.gens span{font-size:13px;color:#B9B4A7}
+@media (max-width:560px){.gens{grid-template-columns:1fr}.gens div+div{border-left:0;border-top:1px solid rgba(212,184,120,.4)}}
 </style>
 </head>
 <body>
@@ -226,7 +237,7 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
       <h1><span class="nw">あなたという</span><span class="nw">尊い存在には、</span><br><span class="gd">百五十年</span>の<span class="nw">物語がある。</span></h1>
       <p class="sub">いまのあなたは、<span class="nw">ご先祖さまが結んできた</span><span class="nw">縁の先にいる。</span></p>
       <p class="body">戸籍を一枚ずつ集め、読み、つなぐ。<br>名前と年号だけの記録から、ひとりひとりの人生をすくい上げます。</p>
-      <div class="note">江戸末期まで遡る 本格家系図作成</div>
+      <div class="note">一生に一度の、本格家系図作成</div>
       <a class="btn btn-shu" href="https://timerex.net/s/w.closet.k8114_1f8a/95f54795" target="_blank" rel="noopener">無料相談を申し込む</a>
       <span class="cta-sub">オンライン（Zoom）最大60分</span>
     </div>
@@ -313,7 +324,7 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
       <li><b>戸籍の請求</b><span>全国の役所へ<br>郵送で請求します</span></li>
       <li><b>読み解き</b><span>古い手書き文字を<br>一枚ずつ解読します</span></li>
       <li><b>家系図の制作</b><span>確認できた事実だけで<br>図に仕上げます</span></li>
-      <li><b>お届け</b><span>データ・巻物と、<br>紐解きセッション</span></li>
+      <li><b>お届け</b><span>A3証書ファイルと、<br>ポイント解説</span></li>
     </ol>
   </div>
 </section>
@@ -336,11 +347,24 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
   </div>
 </section>
 
+<section class="once">
+  <div class="wrap">
+    <span class="eyebrow">一生に一度</span>
+    <p class="big">一度つくれば、<br><em>百年先</em>まで残る。</p>
+    <p class="lead" style="margin-inline:auto">家系図づくりは、人生で何度もするものではありません。<br>古い戸籍は年々失われ、話を聞ける家族も少しずつ減っていきます。<br>だからこそ、いま一度だけ、きちんと形にしておく。<br>それが、子や孫、まだ見ぬ家族への贈りものになります。</p>
+    <div class="gens">
+      <div><span class="y">いま</span><b>あなたが知る</b><span>ご先祖さまの名前と歩みに、<br>はじめて出会う</span></div>
+      <div><span class="y">つぎの世代</span><b>子や孫へ手渡す</b><span>「うちの家はね」と、<br>家の物語を語り継げる</span></div>
+      <div><span class="y">百年後</span><b>未来の家族へ残す</b><span>あなたの名前も、<br>この家系図に刻まれて続いていく</span></div>
+    </div>
+  </div>
+</section>
+
 <section style="background:var(--washi)" id="plan">
   <div class="wrap">
     <div class="center">
       <span class="eyebrow">料金プラン</span>
-      <h2 class="h2">一生に一度の、<br>家の宝物をつくる。</h2>
+      <h2 class="h2">一生に一度。<br>未来へ残す、家族の宝物。</h2>
     </div>
     <div class="plans">
       <div class="plan">
@@ -364,9 +388,9 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
         <ul>
           <li><b>5〜7代前まで遡る調査</b><br><span style="font-size:13px;color:#B9B4A7">江戸後期（150〜200年前）が目安</span></li>
           <li><b>直系＋曽祖父母の兄弟姉妹まで掲載</b></li>
-          <li><b>和紙の巻物仕立て＋証書ファイル</b></li>
+          <li><b>高級和紙に印刷し、A3証書ファイルに収めてお渡し</b></li>
           <li><b>データ納品（戸籍原本の写し付き）</b></li>
-          <li><b>家系図 紐解きセッション（Zoom 90分）</b><br><span style="font-size:13px;color:#B9B4A7">後日、読み解きレポートもお渡しします</span></li>
+          <li><b>家系図 ポイント解説（Zoom 約90分）</b><br><span style="font-size:13px;color:#B9B4A7">家系の流れと、ご先祖さまの歩みをお伝えします</span></li>
         </ul>
         <div class="term"><span>納期の目安</span><span>約5ヶ月</span></div>
       </div>
@@ -397,7 +421,7 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
       <details><summary>自分で戸籍を取らなくてもいいのですか？</summary><div class="a">はい。委任状をいただければ、全国の役所への請求はすべてこちらで行います。直系のご先祖さまの戸籍は、ご本人の依頼があれば取得できます。</div></details>
       <details><summary>古い戸籍が処分されていたらどうなりますか？</summary><div class="a">取れる範囲で最大限たどり、確認できた事実だけで家系図をつくります。たどれなかった部分も、理由と状況をご説明します。</div></details>
       <details><summary>知りたくない情報が出てくることはありますか？</summary><div class="a">可能性はあります。家系図に載せる内容はご相談のうえで決められますので、載せたくない情報は外すことができます。</div></details>
-      <details><summary>エントリーとスタンダードの違いは？</summary><div class="a">エントリーは直系4代前までを図にしてデータでお渡しするプランです。スタンダードは5〜7代前まで遡り、巻物仕立てと「紐解きセッション」で家の物語まで読み解く本格プランです。</div></details>
+      <details><summary>エントリーとスタンダードの違いは？</summary><div class="a">エントリーは直系4代前までを図にしてデータでお渡しするプランです。スタンダードは5〜7代前まで遡り、A3証書ファイルと「家系図ポイント解説」で家の物語まで読み解く本格プランです。</div></details>
     </div>
   </div>
 </section>
