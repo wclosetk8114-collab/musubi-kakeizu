@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="一生に一度の本格家系図作成。無料相談（オンライン・最大60分）受付中。">
+<meta name="description" content="一生に一度の本格家系図作成。経営者の方も、ご相談からお届けまでLINEで完結。">
 <title>結び 家系図</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,6 +215,20 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
 .gens b{display:block;font-family:var(--mincho);font-size:19px;margin:8px 0 6px;letter-spacing:.1em}
 .gens span{font-size:13px;color:#B9B4A7}
 @media (max-width:560px){.gens{grid-template-columns:1fr}.gens div+div{border-left:0;border-top:1px solid rgba(212,184,120,.4)}}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.why div{background:var(--white);border:1px solid var(--line);padding:30px 24px;text-align:left}
+.why .t{font-family:var(--mincho);font-size:13px;letter-spacing:.3em;color:var(--gold-dk)}
+.why h3{font-size:20px;margin:8px 0 10px}
+.why p{font-size:14px;color:var(--ink-2)}
+.line-steps{counter-reset:s;list-style:none;margin:44px auto 0;padding:0;max-width:760px}
+.line-steps li{counter-increment:s;display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(212,184,120,.3);text-align:left}
+.line-steps li::before{content:counter(s,decimal-leading-zero);width:52px;height:52px;border:1px solid var(--gold-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mincho);color:var(--gold-lt);font-size:17px}
+.line-steps b{font-family:var(--mincho);font-size:17px;color:#F3EEE2;letter-spacing:.1em;display:block}
+.line-steps span{font-size:13px;color:#B9B4A7}
+.line-steps em{font-style:normal;display:inline-block;font-size:11px;letter-spacing:.15em;background:rgba(212,184,120,.18);color:var(--gold-lt);padding:1px 8px;margin-left:8px;vertical-align:middle;font-family:var(--goth)}
+.partner{max-width:760px;margin:30px auto 0;border:1px solid rgba(212,184,120,.5);padding:18px 22px;font-size:14px;color:#CFCBC0;text-align:left}
+.partner b{color:var(--gold-lt);font-family:var(--mincho)}
+@media (max-width:760px){.why{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -317,15 +331,17 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
 <section class="dark">
   <div class="wrap center">
     <span class="eyebrow">ご依頼の流れ</span>
-    <h2 class="h2">面倒な手続きは、<br>すべてお任せください。</h2>
-    <ol class="flow">
-      <li><b>無料相談</b><span>Zoomで最大60分。<br>知りたいことを伺います</span></li>
-      <li><b>ご依頼</b><span>プランと範囲を決め、<br>委任状をいただきます</span></li>
-      <li><b>戸籍の請求</b><span>全国の役所へ<br>郵送で請求します</span></li>
-      <li><b>読み解き</b><span>古い手書き文字を<br>一枚ずつ解読します</span></li>
-      <li><b>家系図の制作</b><span>確認できた事実だけで<br>図に仕上げます</span></li>
-      <li><b>お届け</b><span>A3証書ファイルと、<br>ポイント解説</span></li>
+    <h2 class="h2">忙しい方でも、<br>スマホひとつで進みます。</h2>
+    <ol class="line-steps">
+      <li><div><b>無料相談を予約<em>LINE</em></b><span>ご都合のいい日時を選ぶだけ。Zoomで最大60分</span></div></li>
+      <li><div><b>申込みフォームに入力<em>LINE</em></b><span>ご本人とご家族の情報、遡りたい範囲をスマホで入力</span></div></li>
+      <li><div><b>お支払い<em>LINE</em></b><span>カード払い、または会社名宛ての請求書でお振込み</span></div></li>
+      <li><div><b>委任状にご署名<em>郵送</em></b><span>記入済みの委任状と返信用封筒をお送りします。署名して返送するだけ</span></div></li>
+      <li><div><b>進み具合をお知らせ<em>LINE</em></b><span>「戸籍が揃いました」「家系図ができました」と、節目ごとにご連絡</span></div></li>
+      <li><div><b>家系図 ポイント解説<em>Zoom</em></b><span>約90分で、家系の流れとご先祖さまの歩みをお伝えします</span></div></li>
+      <li><div><b>A3証書ファイルをお届け</b><span>高級和紙に印刷した家系図と、データ一式をお送りします</span></div></li>
     </ol>
+    <div class="partner"><b>戸籍の取り寄せは、提携の行政書士が担当します。</b><br>ご本人が役所に行く必要はありません。戸籍の取得は法律で資格者の業務と決まっているため、提携の行政書士が責任をもって行います。</div>
   </div>
 </section>
 
@@ -343,6 +359,19 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
       <p>その体験を、ひとりでも多くの方に届けたい。戸籍の一行一行に込められた人生を、丁寧に読み解いてお渡しします。</p>
       <div class="quote">家系図は、過去の記録ではなく<br><em>これからを生きるための地図</em>です。</div>
       <p style="margin-top:18px;font-size:13px">結び 家系図 代表　つっちー（土屋千穂）</p>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--washi)" id="keieisha">
+  <div class="wrap center">
+    <span class="eyebrow">経営者の方へ</span>
+    <h2 class="h2">会社のはじまりより、<br><em>もっと前</em>へ。</h2>
+    <p class="lead" style="margin-top:20px">事業を率いる方ほど、自分の原点を問われる場面が多いはずです。<br>創業家の、そのまた前の百五十年を、一枚の家系図に。</p>
+    <div class="why">
+      <div><span class="t">事業承継の前に</span><h3>想いごと、次へ渡す</h3><p>会社を継ぐ人に、数字や株だけでなく、家が大切にしてきたものも手渡せます。</p></div>
+      <div><span class="t">社長室・応接室に</span><h3>一生ものの一枚を飾る</h3><p>高級和紙に印刷し、A3証書ファイルに収めてお届け。来客との会話のきっかけにも。</p></div>
+      <div><span class="t">周年・創業の節目に</span><h3>自分の原点を語れる</h3><p>なぜこの仕事をしているのか。その答えが、ご先祖さまの歩みの中に見つかることがあります。</p></div>
     </div>
   </div>
 </section>
@@ -374,7 +403,7 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
         <p style="font-size:13px;color:var(--ink-2)">まずは直系のルーツを、家系図として形にしたい方へ。</p>
         <ul>
           <li><b>4代前までの直系</b><br><span style="font-size:13px;color:var(--ink-2)">100〜120年前まで遡ります</span></li>
-          <li><b>戸籍の請求代行・調査</b></li>
+          <li><b>戸籍の取り寄せ（提携行政書士）・調査</b></li>
           <li><b>生没年月日を記載</b></li>
           <li><b>PDF・Excelでデータ納品</b></li>
         </ul>
@@ -398,7 +427,7 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
     <div class="opts">
       <div class="opt"><span class="tag">OPTION</span><h3>追憶（ご先祖さまの映像）</h3><span class="p">お見積り</span><p>遺された一枚の写真を動かし、生きた時代の情景とともに短い映像にします。</p></div>
     </div>
-    <p class="fine">※ 戸籍の取得にかかる役所の手数料・郵送費は実費です。取得状況により納期が前後することがあります。</p>
+    <p class="fine">※ 会社名宛ての請求書・領収書を発行できます。戸籍の取得にかかる役所の手数料・郵送費は実費です。取得状況により納期が前後することがあります。</p>
     <div class="app">
       <div>
         <span class="tag">まずは気軽に</span>
@@ -418,7 +447,9 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
     </div>
     <div class="faq">
       <details open><summary>父方・母方のどちらか一方だけでも頼めますか？</summary><div class="a">はい、できます。片方だけの場合は料金を調整しますので、無料相談でお知らせください。</div></details>
-      <details><summary>自分で戸籍を取らなくてもいいのですか？</summary><div class="a">はい。委任状をいただければ、全国の役所への請求はすべてこちらで行います。直系のご先祖さまの戸籍は、ご本人の依頼があれば取得できます。</div></details>
+      <details><summary>忙しくて役所に行けません。</summary><div class="a">行かなくて大丈夫です。委任状にご署名いただければ、戸籍の取り寄せは提携の行政書士が行います。</div></details>
+      <details><summary>やりとりはどうやって進みますか？</summary><div class="a">公式LINEで進みます。予約・申込み・お支払い・進み具合のご連絡まで、スマホで完結します。委任状だけは紙の原本が必要なため、郵送でお願いしています。</div></details>
+      <details><summary>会社名で請求書をもらえますか？</summary><div class="a">はい。お支払いはクレジットカードか銀行振込で、会社名宛ての請求書・領収書を発行できます。経費の扱いは、顧問の税理士さんにご確認ください。</div></details>
       <details><summary>古い戸籍が処分されていたらどうなりますか？</summary><div class="a">取れる範囲で最大限たどり、確認できた事実だけで家系図をつくります。たどれなかった部分も、理由と状況をご説明します。</div></details>
       <details><summary>知りたくない情報が出てくることはありますか？</summary><div class="a">可能性はあります。家系図に載せる内容はご相談のうえで決められますので、載せたくない情報は外すことができます。</div></details>
       <details><summary>エントリーとスタンダードの違いは？</summary><div class="a">エントリーは直系4代前までを図にしてデータでお渡しするプランです。スタンダードは5〜7代前まで遡り、A3証書ファイルと「家系図ポイント解説」で家の物語まで読み解く本格プランです。</div></details>
