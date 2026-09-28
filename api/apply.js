@@ -1,6 +1,6 @@
 const { PLANS, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
 
-const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望' };
+const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望', referrer: 'ご紹介者' };
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POSTのみ' });
@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
     .map((k) => `${LABEL[k]}：${k === 'pay' ? (card ? 'カード' : '請求書（銀行振込）') : String(d[k]).trim()}`)
     .join('\n');
 
-  await notifyAdmin(`【新しいお申込み】\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}`);
+  await notifyAdmin(`【新しいお申込み】${String(d.referrer||'').trim()?'\n★紹介あり：'+String(d.referrer).trim():''}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}`);
 
   if (userId) {
     const msgs = [{ type: 'text', text: `${String(d.name).trim()}さま\nお申込みありがとうございます。\n\nプラン：${plan.name}\n金額：${plan.price}` }];

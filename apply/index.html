@@ -95,6 +95,11 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
         <label><input type="radio" name="pay" value="invoice"><div><b>請求書（銀行振込）</b><span>会社名宛ての請求書をLINEでお送りします。</span></div></label>
       </div>
     </fieldset>
+    <fieldset>
+      <legend>ご紹介者</legend>
+      <label class="f">ご紹介者のお名前<span class="opt">いらっしゃる方のみ</span><input type="text" id="referrer" name="referrer" placeholder="例）山田 太郎"></label>
+      <p class="note">どなたかのご紹介でお知りになった方は、その方のお名前をご記入ください。</p>
+    </fieldset>
     <label class="f">ご要望・気になること<span class="opt">任意</span><textarea id="note" name="note"></textarea></label>
     <label class="agree"><input type="checkbox" id="agree" name="agree"><span>ご入力いただいた情報は、家系図の作成と、戸籍の取り寄せを行う提携の行政書士との共有のためだけに使います。この取り扱いに同意します。</span></label>
     <button type="submit" id="send">この内容で申し込む</button>
@@ -109,6 +114,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 <script>
 const t=new URLSearchParams(location.search).get('t')||'';
 if(!t)document.getElementById('nolink').hidden=false;
+const rf=new URLSearchParams(location.search).get('ref');if(rf)document.getElementById('referrer').value=rf;
 const f=document.getElementById('f'),err=document.getElementById('err'),btn=document.getElementById('send');
 f.addEventListener('submit',async e=>{
   e.preventDefault();err.textContent='';
