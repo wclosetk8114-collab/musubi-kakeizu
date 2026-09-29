@@ -5,6 +5,7 @@ const TIMEREX = 'https://timerex.net/s/w.closet.k8114_1f8a/95f54795';
 const PLANS = {
   entry:    { name: 'エントリープラン',             price: '150,000円（税別）', link: 'https://buy.stripe.com/test_aFacN5fFRcSBgnY53m6g80S' },
   standard: { name: 'スタンダードプラン',           price: '398,000円（税別）', link: 'https://buy.stripe.com/test_28EeVdbpB8Cl9ZAeDW6g80T' },
+  heritage: { name: '継承プラン',                    price: '500,000円（税別）', link: 'https://buy.stripe.com/test_6oU3cv79l7yh0p0eDW6g80V' },
   monitor:  { name: 'スタンダードプラン（モニター）', price: '300,000円（税別）', link: 'https://buy.stripe.com/test_aFa6oH51d05PgnYfI06g80U' },
 };
 

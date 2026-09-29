@@ -131,6 +131,13 @@ section{padding-block:88px}
 .plan li::before{content:"";position:absolute;left:4px;top:19px;width:8px;height:8px;border:1.5px solid var(--gold);transform:rotate(45deg)}
 .plan li b{font-family:var(--mincho);font-size:15px}
 .plan .term{margin-top:20px;font-size:13px;display:flex;justify-content:space-between;border-top:1px solid var(--gold);padding-top:14px;font-family:var(--mincho);letter-spacing:.12em}
+.plan.premium{grid-column:1/-1;background:var(--ai-deep);color:#EDE8DC;border:1px solid var(--gold-lt);position:relative;padding:40px 36px 32px}
+.plan.premium::before{content:"最上位";position:absolute;top:-14px;left:36px;background:var(--gold-lt);color:var(--ai-deep);font-family:var(--mincho);font-weight:700;font-size:13px;letter-spacing:.2em;padding:4px 14px}
+.plan.premium .name{color:var(--gold-lt)}
+.plan.premium .price{color:var(--gold-lt)}
+.plan.premium li{border-top-color:rgba(212,184,120,.3)}
+.plan.premium .pgrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:8px 40px;align-items:start}
+@media (max-width:860px){.plan.premium .pgrid{grid-template-columns:1fr}.plan.premium{padding:36px 22px 28px}}
 .opts{display:grid;grid-template-columns:1fr;gap:18px;margin-top:24px}
 .opt{border:1px solid var(--line);background:var(--kinari);padding:22px 24px;display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:baseline}
 .opt .tag{grid-column:1/-1;font-size:11px;letter-spacing:.3em;color:var(--gold-dk)}
@@ -439,6 +446,22 @@ footer{background:#0A1222 !important}
         </ul>
         <div class="term"><span>納期の目安</span><span>2〜3ヶ月</span></div>
       </div>
+      <div class="plan premium">
+        <div class="pgrid">
+          <div>
+            <span class="name">HERITAGE</span>
+            <h3>継承プラン</h3>
+            <div class="price">500,000<small>円</small><span class="tax">税別</span></div>
+            <p style="font-size:13px;color:#CFCBC0">家系図に、家の「しるし」と「物語」を添えて。<br>次の代へ手渡すための、いちばん贅沢なかたち。</p>
+          </div>
+          <ul style="margin-top:0">
+            <li><b>スタンダードプランの内容すべて</b><br><span style="font-size:13px;color:#B9B4A7">5〜7代前までの調査／A3証書ファイル／ポイント解説</span></li>
+            <li><b>家紋を額装してお届け</b><br><span style="font-size:13px;color:#B9B4A7">家紋がわからない場合は、一緒にお探しします。見つからない場合は、ご先祖さまの本籍地を記した古地図を額装します</span></li>
+            <li><b>ご先祖さまからあなたへ、ヒストリー動画</b><br><span style="font-size:13px;color:#B9B4A7">家系図の名前・土地・時代をつなぐ約3分の映像。法事や周年の場でも流せます</span></li>
+          </ul>
+        </div>
+        <div class="term"><span>納期の目安</span><span>3〜4ヶ月</span></div>
+      </div>
     </div>
     <div class="monitor">
       <div class="badge">先着<b>10</b>名様</div>
@@ -478,6 +501,7 @@ footer{background:#0A1222 !important}
       <details><summary>古い戸籍が処分されていたらどうなりますか？</summary><div class="a">取れる範囲で最大限たどり、確認できた事実だけで家系図をつくります。たどれなかった部分も、理由と状況をご説明します。</div></details>
       <details><summary>知りたくない情報が出てくることはありますか？</summary><div class="a">可能性はあります。家系図に載せる内容はご相談のうえで決められますので、載せたくない情報は外すことができます。</div></details>
       <details><summary>エントリーとスタンダードの違いは？</summary><div class="a">エントリーは直系4代前までを図にしてデータでお渡しするプランです。スタンダードは5〜7代前まで遡り、A3証書ファイルと「家系図ポイント解説」で家の物語まで読み解く本格プランです。</div></details>
+      <details><summary>家紋がわからなくても継承プランは申し込めますか？</summary><div class="a">はい。家紋は戸籍には載っていないため、お墓・仏壇・着物・ご親戚への確認などを一緒に進めてお探しします。それでも見つからない場合は、戸籍で分かったご先祖さまの本籍地を古地図に記し、額装してお届けします。</div></details>
     </div>
   </div>
 </section>

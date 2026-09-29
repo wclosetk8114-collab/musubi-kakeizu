@@ -41,7 +41,7 @@ async function handle(ev) {
     return reply(ev.replyToken, [{ type: 'text', text: `無料相談はこちらからご予約いただけます（Zoom・最大60分）。\n${TIMEREX}`, quickReply: quick }]);
   }
   if (/料金|値段|価格|モニター/.test(t)) {
-    return reply(ev.replyToken, [{ type: 'text', text: '■ エントリープラン　150,000円（税別）\n直系4代前まで／納期1〜2ヶ月\n\n■ スタンダードプラン　398,000円（税別）\n5〜7代前まで／A3証書ファイル／ポイント解説／納期2〜3ヶ月\n\n■ モニター価格（先着10名様）　300,000円（税別）\nスタンダードプランを、ご感想をいただく条件でお受けします。', quickReply: quick }]);
+    return reply(ev.replyToken, [{ type: 'text', text: '■ エントリープラン　150,000円（税別）\n直系4代前まで／納期1〜2ヶ月\n\n■ スタンダードプラン　398,000円（税別）\n5〜7代前まで／A3証書ファイル／ポイント解説／納期2〜3ヶ月\n\n■ 継承プラン　500,000円（税別）\nスタンダードの内容＋家紋の額装（不明な場合は本籍地の古地図）＋ヒストリー動画／納期3〜4ヶ月\n\n■ モニター価格（先着10名様）　300,000円（税別）\nスタンダードプランを、ご感想をいただく条件でお受けします。', quickReply: quick }]);
   }
   await notifyAdmin(`【LINEメッセージ】\n${t}`);
 }
