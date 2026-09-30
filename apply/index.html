@@ -71,12 +71,12 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     <fieldset>
       <legend>プラン</legend>
       <div class="choice">
-        <label><input type="radio" name="plan" id="plan-monitor" value="monitor" checked><div><b>モニター価格（先着10名様）　300,000円</b><span>スタンダードプランの内容で、お届け後にご感想をいただく条件です。</span></div></label>
-        <label><input type="radio" name="plan" id="plan-heritage" value="heritage"><div><b>継承プラン　500,000円</b><span>スタンダードの内容＋家紋の額装（不明な場合は本籍地の古地図）＋ヒストリー動画／納期3〜4ヶ月</span></div></label>
-        <label><input type="radio" name="plan" id="plan-standard" value="standard"><div><b>スタンダードプラン　398,000円</b><span>5〜7代前まで／A3証書ファイル／ポイント解説／納期2〜3ヶ月</span></div></label>
-        <label><input type="radio" name="plan" id="plan-entry" value="entry"><div><b>エントリープラン　150,000円</b><span>直系4代前まで／データ納品／納期1〜2ヶ月</span></div></label>
+        <label><input type="radio" name="plan" id="plan-monitor" value="monitor" checked><div><b>モニター価格（先着10名様）　300,000円<small style="font-weight:400;font-size:12px">（税込330,000円）</small></b><span>スタンダードプランの内容で、お届け後にご感想をいただく条件です。</span></div></label>
+        <label><input type="radio" name="plan" id="plan-heritage" value="heritage"><div><b>継承プラン　500,000円<small style="font-weight:400;font-size:12px">（税込550,000円）</small></b><span>スタンダードの内容＋家紋の額装（不明な場合は本籍地の古地図）＋ヒストリー動画／納期3〜4ヶ月</span></div></label>
+        <label><input type="radio" name="plan" id="plan-standard" value="standard"><div><b>スタンダードプラン　398,000円<small style="font-weight:400;font-size:12px">（税込437,800円）</small></b><span>5〜7代前まで／A3証書ファイル／ポイント解説／納期2〜3ヶ月</span></div></label>
+        <label><input type="radio" name="plan" id="plan-entry" value="entry"><div><b>エントリープラン　150,000円<small style="font-weight:400;font-size:12px">（税込165,000円）</small></b><span>直系4代前まで／データ納品／納期1〜2ヶ月</span></div></label>
       </div>
-      <p class="note" style="margin-top:10px">金額はすべて税別です。戸籍の取得にかかる役所の手数料・郵送費は実費となります。</p>
+      <p class="note" style="margin-top:10px">金額は税別、（　）内は税込です。戸籍の取得にかかる役所の手数料・郵送費は実費となります。</p>
     </fieldset>
     <fieldset>
       <legend>調べたい家系</legend>
@@ -93,6 +93,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
       <legend>お支払い方法</legend>
       <div class="choice">
         <label><input type="radio" name="pay" value="card" checked><div><b>クレジットカード</b><span>送信後すぐにお支払いいただけます。</span></div></label>
+        <label><input type="radio" name="pay" value="mosh"><div><b>分割払い（MOSH）</b><span>分割払い用のお支払いリンクをLINEでお送りします。回数はご相談ください。</span></div></label>
         <label><input type="radio" name="pay" value="invoice"><div><b>請求書（銀行振込）</b><span>会社名宛ての請求書をLINEでお送りします。</span></div></label>
       </div>
     </fieldset>
@@ -128,6 +129,7 @@ f.addEventListener('submit',async e=>{
     f.hidden=true;document.getElementById('done').hidden=false;
     const txt=document.getElementById('doneText');
     if(j.payUrl){txt.textContent=j.linked?'LINEにもお支払いのご案内をお送りしました。下のボタンからもお支払いいただけます。':'下のボタンからカードでお支払いいただけます。';const a=document.getElementById('payBtn');a.href=j.payUrl;a.hidden=false;}
+    else if(d.pay==='mosh'){txt.textContent='分割払い（MOSH）のお支払いリンクを2営業日以内にLINEでお送りします。お支払いが確認できしだい、委任状をお送りします。';}
     else{txt.textContent='請求書を2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。';}
     scrollTo({top:0,behavior:'smooth'});
   }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent='この内容で申し込む';}
