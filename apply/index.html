@@ -92,8 +92,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     <fieldset>
       <legend>お支払い方法</legend>
       <div class="choice">
-        <label><input type="radio" name="pay" value="card" checked><div><b>クレジットカード</b><span>送信後すぐにお支払いいただけます。</span></div></label>
-        <label><input type="radio" name="pay" value="mosh"><div><b>分割払い（MOSH）</b><span>分割払い用のお支払いリンクをLINEでお送りします。回数はご相談ください。</span></div></label>
+        <label><input type="radio" name="pay" value="card" checked><div><b>クレジットカード（一括・分割）</b><span>送信後すぐにお支払いいただけます。分割をご希望の場合は、お支払いのあとにカード会社の「あとから分割」をご利用ください。</span></div></label>
         <label><input type="radio" name="pay" value="invoice"><div><b>請求書（銀行振込）</b><span>会社名宛ての請求書をLINEでお送りします。</span></div></label>
       </div>
     </fieldset>
@@ -143,7 +142,6 @@ f.addEventListener('submit',async e=>{
     f.hidden=true;document.getElementById('done').hidden=false;
     const txt=document.getElementById('doneText');
     if(j.payUrl){txt.textContent=j.linked?'LINEにもお支払いのご案内をお送りしました。下のボタンからもお支払いいただけます。':'下のボタンからカードでお支払いいただけます。';const a=document.getElementById('payBtn');a.href=j.payUrl;a.hidden=false;}
-    else if(d.pay==='mosh'){txt.textContent='分割払い（MOSH）のお支払いリンクを2営業日以内にLINEでお送りします。お支払いが確認できしだい、委任状をお送りします。';}
     else{txt.textContent='請求書を2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。';}
     scrollTo({top:0,behavior:'smooth'});
   }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent='この内容で申し込む';}

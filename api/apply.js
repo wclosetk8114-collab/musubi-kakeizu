@@ -43,8 +43,8 @@ module.exports = async (req, res) => {
   if (!plan) return res.status(400).json({ error: 'プランを選んでください。' });
   if (!d.agree) return res.status(400).json({ error: '個人情報の取り扱いへの同意にチェックを入れてください。' });
 
-  const card = d.pay !== 'invoice' && d.pay !== 'mosh';
-  const PAYNAME = { invoice: '請求書（銀行振込）', mosh: '分割払い（MOSH）' };
+  const card = d.pay !== 'invoice';
+  const PAYNAME = { invoice: '請求書（銀行振込）' };
   let payUrl = null;
   if (card) {
     const u = new URL(plan.link);
@@ -70,8 +70,6 @@ module.exports = async (req, res) => {
     const msgs = [{ type: 'text', text: `${String(d.name).trim()}さま\nお申込みありがとうございます。\n\nプラン：${plan.name}\n金額：${plan.price}` }];
     if (card) {
       msgs.push({ type: 'template', altText: 'お支払いはこちら', template: { type: 'buttons', text: 'こちらからカードでお支払いいただけます。お支払いが確認できしだい、委任状をお送りします。', actions: [{ type: 'uri', label: 'お支払いへ進む', uri: payUrl }] } });
-    } else if (d.pay === 'mosh') {
-      msgs.push({ type: 'text', text: '分割払い（MOSH）のお支払いリンクを、このLINEで2営業日以内にお送りします。ご希望の分割回数があれば、このままLINEでお知らせください。お支払いが確認できしだい、委任状をお送りします。' });
     } else {
       msgs.push({ type: 'text', text: '請求書をこのLINEで2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。' });
     }
