@@ -1,6 +1,35 @@
 const { PLANS, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
 
-const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望', referrer: 'ご紹介者' };
+const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望', referrer: 'ご紹介者', ref: '紹介コード' };
+
+/** 税抜の金額。紹介料はここから計算する（台帳側で 率をかける） */
+const NET = { entry: 150000, standard: 398000, heritage: 500000, monitor: 300000 };
+
+/** 紹介の台帳に1件書く。台帳は KAKEIZ+ 側の Supabase にある。
+ *
+ *  **ここが無かったので紹介料が計算できなかった。**
+ *  これまで申し込みは、つっちーさんのLINEに通知が飛ぶだけで、どこにも残っていなかった。
+ *
+ *  合言葉（REFERRAL_SECRET）が合わなければ、向こうで黙って捨てられる。
+ *  失敗しても申し込み自体は止めない（お客さまを待たせない）。 */
+async function logReferral(code, plan, name, email) {
+  const secret = process.env.REFERRAL_SECRET;
+  if (!secret || !/^P-[A-Za-z0-9]{4,12}$/.test(String(code || ''))) return;
+  try {
+    const r = await fetch('https://kakeiz-plus.vercel.app/api/referral/log', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        secret, code: String(code).toUpperCase(), source: 'musubi',
+        plan, plan_name: (PLANS[plan] || {}).name || null, amount: NET[plan] || null,
+        name: name || null, email: email || null,
+      }),
+    });
+    if (!r.ok) console.error('referral log', r.status, await r.text());
+  } catch (e) {
+    console.error('referral log threw', String(e).slice(0, 200));
+  }
+}
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POSTのみ' });
@@ -29,7 +58,13 @@ module.exports = async (req, res) => {
     .map((k) => `${LABEL[k]}：${k === 'pay' ? (card ? 'カード' : PAYNAME[d.pay]) : String(d[k]).trim()}`)
     .join('\n');
 
-  await notifyAdmin(`【新しいお申込み】${String(d.referrer||'').trim()?'\n★紹介あり：'+String(d.referrer).trim():''}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}`);
+  const refCode = String(d.ref || '').trim().toUpperCase();
+  const refLine = (String(d.referrer||'').trim() || refCode)
+    ? `\n★紹介あり：${String(d.referrer||'').trim()}${refCode ? ' / ' + refCode : ''}` : '';
+  await notifyAdmin(`【新しいお申込み】${refLine}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}`);
+
+  // 紹介の台帳に残す。入金の確認と紹介料の計算は、運営コンソールの「紹介料」で行う
+  await logReferral(refCode, d.plan, d.name, d.email);
 
   if (userId) {
     const msgs = [{ type: 'text', text: `${String(d.name).trim()}さま\nお申込みありがとうございます。\n\nプラン：${plan.name}\n金額：${plan.price}` }];

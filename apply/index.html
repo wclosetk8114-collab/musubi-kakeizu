@@ -100,7 +100,8 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     <fieldset>
       <legend>ご紹介者</legend>
       <label class="f">ご紹介者のお名前<span class="opt">いらっしゃる方のみ</span><input type="text" id="referrer" name="referrer" placeholder="例）山田 太郎"></label>
-      <p class="note">どなたかのご紹介でお知りになった方は、その方のお名前をご記入ください。</p>
+      <label class="f">紹介コード<span class="opt">お持ちの方のみ</span><input type="text" id="ref" name="ref" placeholder="例）P-A1B2C3" autocapitalize="characters" spellcheck="false"></label>
+      <p class="note">どなたかのご紹介でお知りになった方は、その方のお名前をご記入ください。紹介コード（P-からはじまる6文字）をお持ちの方は、あわせてご記入ください。ご紹介者からのリンクで来られた場合は、はじめから入っています。</p>
     </fieldset>
     <label class="f">ご要望・気になること<span class="opt">任意</span><textarea id="note" name="note"></textarea></label>
     <label class="agree"><input type="checkbox" id="agree" name="agree"><span>ご入力いただいた情報は、家系図の作成と、戸籍の取り寄せを行う提携の行政書士との共有のためだけに使います。この取り扱いと、<a href="/tokushoho/" target="_blank">特定商取引法に基づく表記</a>（キャンセル・返金の条件）に同意します。</span></label>
@@ -116,7 +117,20 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 <script>
 const t=new URLSearchParams(location.search).get('t')||'';
 if(!t)document.getElementById('nolink').hidden=false;
-const rf=new URLSearchParams(location.search).get('ref');if(rf)document.getElementById('referrer').value=rf;
+/* 紹介コードを運ぶ。リンクで来た人は ?ref=P-XXXXXX が付いている。
+   LINEを一度はさむと URL が切れるので、トップで覚えた値も見る（localStorage）。
+   それでも切れることがあるので、画面にも「紹介コード」の欄を出してある。 */
+(function(){
+  var q=new URLSearchParams(location.search);
+  var code=q.get('ref')||'';
+  if(!/^P-[A-Za-z0-9]{4,12}$/.test(code)){
+    try{var v=localStorage.getItem('musubi.ref')||'';if(/^P-[A-Za-z0-9]{4,12}$/.test(v))code=v;}catch(e){}
+  }
+  if(code){try{localStorage.setItem('musubi.ref',code);}catch(e){}
+           document.getElementById('ref').value=code.toUpperCase();}
+  var by=q.get('by')||'';
+  if(by)document.getElementById('referrer').value=by;
+})();
 const f=document.getElementById('f'),err=document.getElementById('err'),btn=document.getElementById('send');
 f.addEventListener('submit',async e=>{
   e.preventDefault();err.textContent='';

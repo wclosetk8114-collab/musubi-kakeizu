@@ -543,5 +543,14 @@ footer{background:#0A1222 !important}
   <div style="margin-top:10px;font-size:12px"><a href="/tokushoho/" style="color:inherit">特定商取引法に基づく表記</a>　｜　<a href="/sender/" style="color:inherit">運営者情報</a></div>
 </footer>
 
+<script>
+/* 紹介リンク（?ref=P-XXXXXX）で来た人のコードを覚えておく。
+   申し込みフォームは、この値を「紹介コード」の欄にはじめから入れる。
+   LINEを一度はさむと URL のコードは消えるので、ここで拾っておくのが効く。 */
+(function(){try{
+  var c=new URLSearchParams(location.search).get('ref')||'';
+  if(/^P-[A-Za-z0-9]{4,12}$/.test(c))localStorage.setItem('musubi.ref',c.toUpperCase());
+}catch(e){}})();
+</script>
 </body>
 </html>
