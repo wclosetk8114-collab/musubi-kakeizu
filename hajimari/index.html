@@ -11,10 +11,10 @@
 <style>
 :root{
   color-scheme: light;
-  --ai:#1C2340; --ai-deep:#10152A; --ai-soft:#2A3356;
+  --ai:#1F3A2C; --ai-deep:#122619; --ai-soft:#2E5241;
   --kinari:#F7F5F0; --washi:#EFEAE0; --white:#FFFFFF;
   --gold:#AD8A3F; --gold-lt:#D4B878; --gold-dk:#8A6D2E;
-  --shu:#B7301E; --ink:#1C2340; --ink-2:#4A4F63; --line:#D9CFBC;
+  --shu:#B7301E; --ink:#1F3A2C; --ink-2:#4A574F; --line:#D9CFBC;
   --mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
   --goth:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
 }
@@ -38,10 +38,10 @@ section{padding-block:88px}
 .center .lead{margin-inline:auto}
 
 /* header */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(16,21,42,.94);backdrop-filter:blur(6px);color:#EDE8DC}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(18,38,25,.94);backdrop-filter:blur(6px);color:#EDE8DC}
 .aud{display:flex;justify-content:center;gap:8px;padding:0 12px 10px}
 .aud a{flex:0 1 220px;text-align:center;font-family:var(--mincho);font-size:13px;letter-spacing:.12em;padding:7px 10px;border:1px solid rgba(212,184,120,.45);color:#CFC6B0;text-decoration:none;white-space:nowrap}
-.aud a.on{background:var(--gold-lt);border-color:var(--gold-lt);color:#10152A;font-weight:700}
+.aud a.on{background:var(--gold-lt);border-color:var(--gold-lt);color:#122619;font-weight:700}
 .aud a small{display:block;font-size:10px;letter-spacing:.05em;opacity:.85;font-family:var(--goth)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}
@@ -66,7 +66,7 @@ section{padding-block:88px}
 .hero .note{display:flex;align-items:center;gap:12px;margin:26px 0 30px;font-family:var(--mincho);font-size:13px;letter-spacing:.2em;color:#CFCBC0}
 .hero .note::before,.hero .note::after{content:"";width:28px;height:1px;background:var(--gold)}
 .cta-sub{display:block;margin-top:14px;font-size:12px;color:#B9B4A7;letter-spacing:.1em}
-.scroll{position:relative;background:#0E1326;border:1px solid #3A4266;padding:18px;border-radius:4px;box-shadow:0 30px 60px rgba(0,0,0,.45);transform:rotate(-2.5deg);max-width:100%}
+.scroll{position:relative;background:#0E1326;border:1px solid #3C5A48;padding:18px;border-radius:4px;box-shadow:0 30px 60px rgba(0,0,0,.45);transform:rotate(-2.5deg);max-width:100%}
 .scroll::before{content:"";position:absolute;inset:8px;border:1px solid rgba(212,184,120,.55);pointer-events:none}
 .scroll::after{content:"A3 証書ファイル";position:absolute;right:18px;bottom:-26px;font-family:var(--mincho);font-size:11px;letter-spacing:.3em;color:#B9B4A7}
 .scroll svg{display:block;width:100%;height:auto}
@@ -258,13 +258,13 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
 .monitor .mp s{display:block;font-size:14px;color:#8F8B80;font-weight:500}
 .monitor .mp small{font-size:15px}
 @media (max-width:760px){.monitor{grid-template-columns:1fr;text-align:center;padding:26px 20px}.monitor .badge{justify-self:center}}
-.hero{background:radial-gradient(ellipse at 20% 30%,rgba(201,169,97,.14),transparent 55%),#0E0F13 !important}
+.hero{background:radial-gradient(ellipse at 20% 30%,rgba(201,169,97,.14),transparent 55%),#0E140F !important}
 @media (min-width:861px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
 .tree{order:-1;position:relative;max-width:100%}
 .tree img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 78% 80% at 50% 50%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 78% 80% at 50% 50%,#000 62%,transparent 100%)}
 @media (max-width:860px){.tree{order:0;max-width:460px;margin:0 auto}}
-:root{--ai:#15213C;--ai-deep:#0D1628;--ai-soft:#1B2A4A;--gold:#B08D4A;--gold-lt:#D9BD7E}
-.hero{background:radial-gradient(ellipse at 18% 35%,rgba(217,189,126,.16),transparent 50%),radial-gradient(ellipse at 85% 0%,rgba(217,189,126,.12),transparent 40%),linear-gradient(180deg,#0B1426,#13203A) !important;position:relative}
+:root{--ai:#1A3326;--ai-deep:#0D1A12;--ai-soft:#24402F;--gold:#B08D4A;--gold-lt:#D9BD7E}
+.hero{background:radial-gradient(ellipse at 18% 35%,rgba(217,189,126,.16),transparent 50%),radial-gradient(ellipse at 85% 0%,rgba(217,189,126,.12),transparent 40%),linear-gradient(180deg,#0D1E14,#183427) !important;position:relative}
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 92% -12%,transparent 0 250px,rgba(217,189,126,.35) 251px,transparent 252px),radial-gradient(circle at 96% 8%,transparent 0 380px,rgba(217,189,126,.18) 381px,transparent 382px)}
 .hero .wrap{position:relative}
 .tree img{-webkit-mask-image:radial-gradient(ellipse 72% 76% at 50% 50%,#000 55%,transparent 100%)!important;mask-image:radial-gradient(ellipse 72% 76% at 50% 50%,#000 55%,transparent 100%)!important}
@@ -281,10 +281,10 @@ footer .brand{justify-content:center;margin-bottom:10px;color:#EDE8DC}
 @media (max-width:860px){.hero p.body br{display:none}}.hero p.body{font-family:var(--mincho);font-size:15px;line-height:2.1;letter-spacing:.12em;color:#D8D2C4}
 .why div{position:relative;padding-left:78px !important}
 .why .no{position:absolute;left:22px;top:24px;font-family:"Cormorant Garamond",var(--mincho);font-style:italic;font-size:40px;color:var(--gold);line-height:1}
-.dark{background:linear-gradient(180deg,#13203A,#0F1A30)}
-.final{background:radial-gradient(ellipse at 50% 0%,rgba(217,189,126,.2),transparent 60%),#0D1628 !important}
+.dark{background:linear-gradient(180deg,#183427,#0F1A30)}
+.final{background:radial-gradient(ellipse at 50% 0%,rgba(217,189,126,.2),transparent 60%),#0D1A12 !important}
 footer{background:#0A1222 !important}
-.top{background:rgba(11,20,38,.94) !important}
+.top{background:rgba(13,30,20,.94) !important}
 .hero{overflow:hidden}
 .hero .moon{position:absolute;top:0;right:0;width:min(62%,900px);height:auto;pointer-events:none;opacity:.95}
 .inkm{position:absolute;right:1%;bottom:-20px;width:260px;height:auto;pointer-events:none;opacity:.55;transform:scaleX(-1)}.inkf{left:1%;right:auto;transform:none;width:260px;opacity:.6}@media (min-width:861px){.hero{padding-top:150px !important}}
