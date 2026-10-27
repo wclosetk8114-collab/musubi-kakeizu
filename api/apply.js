@@ -1,9 +1,9 @@
-const { PLANS, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
+const { PLANS, ININJO, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
 
 const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望', referrer: 'ご紹介者', ref: '紹介コード' };
 
 /** 税抜の金額。紹介料はここから計算する（台帳側で 率をかける） */
-const NET = { entry: 150000, standard: 398000, heritage: 500000, monitor: 300000 };
+const NET = { hajimari: 69800, entry: 150000, standard: 398000, heritage: 500000, monitor: 300000 };
 
 /** 紹介の台帳に1件書く。台帳は KAKEIZ+ 側の Supabase にある。
  *
@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
   const refCode = String(d.ref || '').trim().toUpperCase();
   const refLine = (String(d.referrer||'').trim() || refCode)
     ? `\n★紹介あり：${String(d.referrer||'').trim()}${refCode ? ' / ' + refCode : ''}` : '';
-  await notifyAdmin(`【新しいお申込み】${refLine}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}`);
+  await notifyAdmin(`【新しいお申込み】${refLine}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}\n\n▼委任状の印刷：${ININJO}\n（「運営用」の欄にこの通知を貼り付けると、自動で入ります）`);
 
   // 紹介の台帳に残す。入金の確認と紹介料の計算は、運営コンソールの「紹介料」で行う
   await logReferral(refCode, d.plan, d.name, d.email);

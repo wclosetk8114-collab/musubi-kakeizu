@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { rawBody, safeEq, push, notifyAdmin } = require('./_lib');
+const { ININJO, rawBody, safeEq, push, notifyAdmin } = require('./_lib');
 
 function verify(body, header, secret) {
   if (!header || !secret) return false;
@@ -20,11 +20,15 @@ module.exports = async (req, res) => {
     const userId = s.client_reference_id;
     const name = (s.customer_details && s.customer_details.name) || '';
     const amount = (s.amount_total || 0).toLocaleString('ja-JP');
-    await notifyAdmin(`【お支払い完了】\n${name}さま　${amount}円（税込）\nメール：${(s.customer_details && s.customer_details.email) || ''}\nLINE連携：${userId ? 'あり' : 'なし'}`);
+    await notifyAdmin(`【お支払い完了】\n${name}さま　${amount}円（税込）\nメール：${(s.customer_details && s.customer_details.email) || ''}\nLINE連携：${userId ? 'あり' : 'なし'}\n\n▼次は委任状の郵送です：${ININJO}`);
     if (userId && /^U[0-9a-f]{32}$/.test(userId)) {
       await push(userId, [{
         type: 'text',
-        text: `${name ? name + 'さま\n' : ''}お支払いを確認しました。ありがとうございます。\n\n次は委任状です。\n記入済みの委任状と返信用封筒を、ご登録の住所へ郵送します。届いたらご署名のうえ、返信用封筒でお送りください。\n\n戸籍の取り寄せは提携の行政書士が行います。進み具合は、このLINEでお知らせします。`,
+        text: `${name ? name + 'さま\n' : ''}お支払いを確認しました。ありがとうございます。\n\n次は「委任状」です。\n戸籍の取り寄せを、提携の行政書士に任せるための書類です。\n\n記入済みの委任状と返信用封筒を、ご登録のご住所へ郵送します。届きましたら、お名前を手書きでご署名いただき、返信用封筒でお送りください。\n\n戸籍の取り寄せは提携の行政書士が行います。進み具合は、このLINEでお知らせします。`,
+      }, {
+        type: 'template',
+        altText: 'ご自宅で印刷できる方へ',
+        template: { type: 'buttons', text: 'ご自宅で印刷できる方は、こちらから印刷して送っていただくと、少し早く進みます。', actions: [{ type: 'uri', label: '委任状を印刷する', uri: ININJO }] },
       }]);
     }
   }

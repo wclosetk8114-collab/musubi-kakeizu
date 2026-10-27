@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const SITE = 'https://musubi-kakeizu.vercel.app';
 const TIMEREX = 'https://timerex.net/s/w.closet.k8114_1f8a/95f54795';
 const PLANS = {
+  hajimari: { name: 'はじまりプラン',               price: '69,800円（税別・税込76,780円）',   link: 'https://buy.stripe.com/6oUbJ1gJV05P0p07bu6g80q' },
   entry:    { name: 'エントリープラン',             price: '150,000円（税別・税込165,000円）', link: 'https://buy.stripe.com/bJe6oH79l19T4Fg0N66g80e' },
   standard: { name: 'スタンダードプラン',           price: '398,000円（税別・税込437,800円）', link: 'https://buy.stripe.com/7sYcN59htbOxdbManG6g80f' },
   heritage: { name: '継承プラン',                    price: '500,000円（税別・税込550,000円）', link: 'https://buy.stripe.com/3cIaEX8dp5q9c7IbrK6g80h' },
@@ -45,4 +46,6 @@ const reply = (replyToken, messages) => lineCall('message/reply', { replyToken, 
 const push = (to, messages) => to ? lineCall('message/push', { to, messages }) : Promise.resolve();
 const notifyAdmin = (text) => push(process.env.ADMIN_LINE_USER_ID, [{ type: 'text', text: text.slice(0, 4900) }]);
 
-module.exports = { SITE, TIMEREX, PLANS, rawBody, safeEq, makeToken, readToken, reply, push, notifyAdmin };
+const ININJO = `${SITE}/ininjo/`;
+
+module.exports = { SITE, ININJO, TIMEREX, PLANS, rawBody, safeEq, makeToken, readToken, reply, push, notifyAdmin };

@@ -72,9 +72,10 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
       <legend>プラン</legend>
       <div class="choice">
         <label><input type="radio" name="plan" id="plan-monitor" value="monitor" checked><div><b>モニター価格（先着10名様）　300,000円<small style="font-weight:400;font-size:12px">（税込330,000円）</small></b><span>スタンダードプランの内容で、お届け後にご感想をいただく条件です。</span></div></label>
-        <label><input type="radio" name="plan" id="plan-heritage" value="heritage"><div><b>継承プラン　500,000円<small style="font-weight:400;font-size:12px">（税込550,000円）</small></b><span>スタンダードの内容＋家紋の額装（不明な場合は本籍地の古地図）＋ヒストリー動画／納期3〜4ヶ月</span></div></label>
-        <label><input type="radio" name="plan" id="plan-standard" value="standard"><div><b>スタンダードプラン　398,000円<small style="font-weight:400;font-size:12px">（税込437,800円）</small></b><span>5〜7代前まで／A3証書ファイル／ポイント解説／納期2〜3ヶ月</span></div></label>
-        <label><input type="radio" name="plan" id="plan-entry" value="entry"><div><b>エントリープラン　150,000円<small style="font-weight:400;font-size:12px">（税込165,000円）</small></b><span>直系4代前まで／データ納品／納期1〜2ヶ月</span></div></label>
+        <label><input type="radio" name="plan" id="plan-heritage" value="heritage"><div><b>継承プラン　500,000円<small style="font-weight:400;font-size:12px">（税込550,000円）</small></b><span>スタンダードの内容＋家紋の額装（不明な場合は本籍地の古地図）＋ヒストリー動画（約3分）／納期3〜4ヶ月</span></div></label>
+        <label><input type="radio" name="plan" id="plan-standard" value="standard"><div><b>スタンダードプラン　398,000円<small style="font-weight:400;font-size:12px">（税込437,800円）</small></b><span>5〜7代前まで／A3証書ファイル／解説書／ポイント解説（Zoom約90分）／動画（約1分半）／納期2〜3ヶ月</span></div></label>
+        <label><input type="radio" name="plan" id="plan-entry" value="entry"><div><b>エントリープラン　150,000円<small style="font-weight:400;font-size:12px">（税込165,000円）</small></b><span>直系4代前まで／データ納品／解説書／読み解きセッション（Zoom45分）／動画（約30秒）／納期1〜2ヶ月</span></div></label>
+        <label><input type="radio" name="plan" id="plan-hajimari" value="hajimari"><div><b>はじまりプラン　69,800円<small style="font-weight:400;font-size:12px">（税込76,780円）</small></b><span>直系4代前までの家系図／PDF納品／納期1〜2ヶ月</span></div></label>
       </div>
       <p class="note" style="margin-top:10px">金額は税別、（　）内は税込です。戸籍の取得にかかる役所の手数料・郵送費は実費となります。</p>
     </fieldset>
@@ -139,6 +140,7 @@ f.addEventListener('submit',async e=>{
     const r=await fetch('/api/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
     const j=await r.json();
     if(!r.ok)throw new Error(j.error||'送信できませんでした。');
+    try{localStorage.setItem('musubi.ininjo',JSON.stringify({name:d.name,kana:d.kana,zip:d.zip,phone:d.phone,address:d.address,honseki:d.honseki,line:d.line,parents:d.parents}));}catch(e){}
     f.hidden=true;document.getElementById('done').hidden=false;
     const txt=document.getElementById('doneText');
     if(j.payUrl){txt.textContent=j.linked?'LINEにもお支払いのご案内をお送りしました。下のボタンからもお支払いいただけます。':'下のボタンからカードでお支払いいただけます。';const a=document.getElementById('payBtn');a.href=j.payUrl;a.hidden=false;}

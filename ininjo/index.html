@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>委任状｜結び 家系図</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{--ai:#1C2340;--ai-deep:#10152A;--kinari:#F7F5F0;--gold:#AD8A3F;--gold-dk:#8A6D2E;--shu:#B7301E;--ink:#1C2340;--ink-2:#4A4F63;--line:#D9CFBC;--mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;--goth:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--kinari);color:var(--ink);font-family:var(--goth);font-size:15px;line-height:1.8;letter-spacing:.03em}
+.top{background:var(--ai-deep);color:#EDE8DC;padding:14px 16px;text-align:center;font-family:var(--mincho);letter-spacing:.25em;font-size:17px;font-weight:700}
+main{max-width:860px;margin:0 auto;padding:28px 16px 64px}
+h1{font-family:var(--mincho);font-size:26px;letter-spacing:.1em;margin:0 0 6px;text-align:center}
+.lead{text-align:center;color:var(--ink-2);font-size:14px;margin:0 0 24px}
+.steps{background:#fff;border:1px solid var(--line);padding:18px 20px;margin:0 0 22px}
+.steps ol{margin:0;padding-left:1.4em}.steps li{margin:4px 0}
+.panel{background:#fff;border:1px solid var(--line);padding:20px;margin:0 0 22px}
+.panel h2{font-family:var(--mincho);font-size:18px;margin:0 0 12px;letter-spacing:.08em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+.grid .w{grid-column:1/-1}
+label{display:block;font-size:13px;color:var(--ink-2)}
+input,textarea,select{width:100%;font:inherit;font-size:16px;padding:9px 11px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:0;margin-top:3px}
+textarea{min-height:110px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{font:inherit;font-weight:700;padding:12px 22px;border:0;cursor:pointer;letter-spacing:.08em}
+.b-shu{background:var(--shu);color:#fff}.b-line{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.small{font-size:12px;color:var(--ink-2)}
+/* ===== 委任状（A4） ===== */
+.paper{background:#fff;box-shadow:0 2px 14px rgba(16,21,42,.12);margin:0 auto;width:100%;max-width:794px;aspect-ratio:210/297;padding:7% 8%;font-family:var(--mincho);color:#111;font-size:clamp(9px,1.75vw,14px);line-height:1.75;letter-spacing:.04em;position:relative}
+.paper h3{font-size:2.1em;text-align:center;letter-spacing:1em;margin:0 0 1.4em;padding-left:1em;font-weight:700}
+.paper .blk{margin:0 0 1.2em}
+.paper .lbl{font-weight:700;margin-bottom:.3em}
+.paper table{width:100%;border-collapse:collapse}
+.paper td{border-bottom:1px solid #555;padding:.45em .3em;vertical-align:bottom;height:2.3em}
+.paper td.k{width:6.5em;white-space:nowrap;font-size:.92em}
+.paper .v{font-family:var(--goth);font-size:1.02em}
+.paper .hint{color:#777;font-size:.82em;font-family:var(--goth)}
+.paper .sign{position:relative}
+.paper .seal{position:absolute;right:.4em;bottom:.25em;width:3.2em;height:3.2em;border:1px dashed #999;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#999;font-size:.8em}
+.paper ol{margin:.3em 0 0;padding-left:1.4em}
+.paper li{margin:.15em 0}
+.paper .date{text-align:right;margin:1em 0}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+@media print{
+  @page{size:A4;margin:0}
+  body{background:#fff}
+  .top,.lead,h1,.steps,.panel,.noprint{display:none!important}
+  main{padding:0;max-width:none}
+  .paper{box-shadow:none;max-width:none;width:210mm;height:297mm;aspect-ratio:auto;padding:22mm 20mm;font-size:11.5pt}
+}
+</style>
+</head>
+<body>
+<div class="top">結び 家系図</div>
+<main>
+  <h1>委任状</h1>
+  <p class="lead">戸籍の取り寄せを、提携の行政書士に任せるための書類です。</p>
+
+  <div class="steps">
+    <b>ご記入の流れ</b>
+    <ol>
+      <li>下の欄に、ご本人さまの情報を入れます（申込みフォームと同じスマホ・パソコンなら、はじめから入っています）。</li>
+      <li>「印刷する」でA4に印刷します。</li>
+      <li><b>お名前はご本人さまの手書き</b>でご署名ください。日付・生年月日も手書きでかまいません。印鑑は認印で大丈夫です（なくても受け付ける役所が多いです）。</li>
+      <li>返信用封筒、または普通郵便で、下記の住所へお送りください。</li>
+    </ol>
+    <p class="small" style="margin:10px 0 0">印刷できない方はご安心ください。記入済みの委任状と返信用封筒を、こちらからご自宅へお送りします。<br>送り先：〒105-6234 東京都港区愛宕2-5-1 愛宕グリーンヒルズMORIタワー34階　結び 家系図 宛</p>
+  </div>
+
+  <div class="panel noprint">
+    <h2>ご本人さまの情報</h2>
+    <div class="grid">
+      <label>お名前（印字用・ご署名は手書き）<input id="i-name" placeholder="土屋 千穂"></label>
+      <label>ふりがな<input id="i-kana" placeholder="つちや ちほ"></label>
+      <label>郵便番号<input id="i-zip" inputmode="numeric" placeholder="123-4567"></label>
+      <label>電話番号<input id="i-phone" inputmode="tel"></label>
+      <label class="w">ご住所<input id="i-address"></label>
+      <label class="w">本籍地（わかる範囲で）<input id="i-honseki" placeholder="例）秋田県仙北市西木町〇〇"></label>
+      <label>調べたい家系
+        <select id="i-line"><option>父方・母方の両方</option><option>父方のみ</option><option>母方のみ</option></select></label>
+      <label>ご両親のお名前（わかる範囲で）<input id="i-parents"></label>
+    </div>
+    <details style="margin-top:14px"><summary class="small" style="cursor:pointer">運営用：申込み通知を貼り付けて入力する</summary>
+      <textarea id="paste" placeholder="LINEに届いた【新しいお申込み】の文面をそのまま貼り付けてください"></textarea>
+      <div class="btns"><button type="button" class="b-line" id="fromPaste">貼り付けた内容を入れる</button></div>
+    </details>
+    <div class="btns">
+      <button type="button" class="b-shu" onclick="window.print()">印刷する（A4）</button>
+      <button type="button" class="b-line" id="clear">入力を消す</button>
+    </div>
+    <p class="small" style="margin-top:8px">入力した内容は、この端末の中だけで使います。どこにも送信されません。</p>
+  </div>
+
+  <article class="paper" id="paper">
+    <h3>委任状</h3>
+
+    <div class="blk">
+      <div class="lbl">（代理人）</div>
+      <table>
+        <tr><td class="k">住　所</td><td><span class="v" id="p-ag-address"></span><span class="hint" id="p-ag-hint1">（提携の行政書士が記入します）</span></td></tr>
+        <tr><td class="k">氏　名</td><td><span class="v" id="p-ag-name"></span><span class="hint" id="p-ag-hint2">（提携の行政書士が記入します）</span></td></tr>
+      </table>
+    </div>
+
+    <p>私は、上記の者を代理人と定め、下記の権限を委任します。</p>
+
+    <div class="blk">
+      <div class="lbl" style="text-align:center;margin:.6em 0">記</div>
+      <ol>
+        <li>私本人、および私の直系尊属（父母・祖父母・曽祖父母など）にかかる、次の証明書の交付の請求および受領に関する一切の権限
+          <br>・戸籍全部事項証明書（戸籍謄本）・除籍全部事項証明書（除籍謄本）・改製原戸籍謄本</li>
+        <li>上記の請求にあたり、各市区町村への郵送による請求、手数料の納付、証明書の受領に関する一切の権限</li>
+      </ol>
+      <p style="margin:.6em 0 0">請求の目的：家系図作成のため（自らの家系を確認するため）</p>
+      <p style="margin:.2em 0 0">調べる家系：<span class="v" id="p-line"></span></p>
+    </div>
+
+    <p class="date">令和　　　年　　　月　　　日</p>
+
+    <div class="blk">
+      <div class="lbl">（委任者）</div>
+      <table>
+        <tr><td class="k">住　所</td><td><span class="v" id="p-zip"></span>　<span class="v" id="p-address"></span></td></tr>
+        <tr><td class="k">ふりがな</td><td><span class="v" id="p-kana"></span></td></tr>
+        <tr><td class="k sign">氏　名<br><span class="hint">（自署）</span></td><td class="sign" style="height:3.4em"><span class="seal">印</span></td></tr>
+        <tr><td class="k">生年月日</td><td>明治・大正・昭和・平成・令和　　　年　　　月　　　日</td></tr>
+        <tr><td class="k">電話番号</td><td><span class="v" id="p-phone"></span></td></tr>
+        <tr><td class="k">本　籍</td><td><span class="v" id="p-honseki"></span></td></tr>
+        <tr><td class="k">筆頭者</td><td><span class="v" id="p-hitto"></span></td></tr>
+      </table>
+    </div>
+    <p class="hint" style="position:absolute;left:8%;right:8%;bottom:4%;text-align:center">結び 家系図　〒105-6234 東京都港区愛宕2-5-1 愛宕グリーンヒルズMORIタワー34階</p>
+  </article>
+</main>
+<script>
+/* 代理人（提携の行政書士）を決めたら、ここに入れると印字されます。空のままなら手書き欄になります。 */
+const AGENT = { address: '', name: '' };
+
+const KEYS=['name','kana','zip','phone','address','honseki','line','parents'];
+const $=id=>document.getElementById(id);
+function render(){
+  const v={};KEYS.forEach(k=>v[k]=($('i-'+k).value||'').trim());
+  $('p-zip').textContent=v.zip?('〒'+v.zip.replace(/^〒/,'')):'';
+  $('p-address').textContent=v.address;
+  $('p-kana').textContent=v.kana;
+  $('p-phone').textContent=v.phone;
+  $('p-honseki').textContent=v.honseki;
+  $('p-line').textContent=v.line||'';
+  $('p-hitto').textContent='';
+  $('p-ag-address').textContent=AGENT.address;$('p-ag-name').textContent=AGENT.name;
+  $('p-ag-hint1').hidden=!!AGENT.address;$('p-ag-hint2').hidden=!!AGENT.name;
+}
+function save(){try{const d={};KEYS.forEach(k=>d[k]=$('i-'+k).value);localStorage.setItem('musubi.ininjo',JSON.stringify(d));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem('musubi.ininjo')||'{}');KEYS.forEach(k=>{if(d[k])$('i-'+k).value=d[k];});}catch(e){}}
+KEYS.forEach(k=>$('i-'+k).addEventListener('input',()=>{render();save();}));
+$('clear').addEventListener('click',()=>{KEYS.forEach(k=>{if(k!=='line')$('i-'+k).value='';});try{localStorage.removeItem('musubi.ininjo');}catch(e){}render();});
+/* 運営用：LINEに届く「お名前：〇〇」形式の通知を読み取る */
+const MAP={'お名前':'name','ふりがな':'kana','郵便番号':'zip','住所':'address','電話番号':'phone','本籍地（わかる範囲）':'honseki','調べたい家系':'line','ご両親のお名前':'parents'};
+$('fromPaste').addEventListener('click',()=>{
+  $('paste').value.split(/\r?\n/).forEach(l=>{const m=l.match(/^(.+?)：(.*)$/);if(!m)return;const k=MAP[m[1].trim()];if(!k)return;
+    const el=$('i-'+k);if(el.tagName==='SELECT'){[...el.options].forEach(o=>{if(o.text===m[2].trim())el.value=o.text;});}else el.value=m[2].trim();});
+  render();save();
+});
+load();render();
+</script>
+</body>
+</html>
