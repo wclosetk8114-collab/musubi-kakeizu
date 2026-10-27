@@ -116,6 +116,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 </main>
 <script>
 const t=new URLSearchParams(location.search).get('t')||'';
+(function(){var pl=new URLSearchParams(location.search).get('plan');if(pl){var el=document.getElementById('plan-'+pl);if(el)el.checked=true;}})();
 if(!t)document.getElementById('nolink').hidden=false;
 /* 紹介コードを運ぶ。リンクで来た人は ?ref=P-XXXXXX が付いている。
    LINEを一度はさむと URL が切れるので、トップで覚えた値も見る（localStorage）。
