@@ -4,6 +4,8 @@ const SITE = 'https://musubi-kakeizu.vercel.app';
 const TIMEREX = 'https://timerex.net/s/w.closet.k8114_1f8a/95f54795';
 const PLANS = {
   hajimari: { name: 'はじまりプラン',               price: '69,800円（税別・税込76,780円）',   link: 'https://buy.stripe.com/6oUbJ1gJV05P0p07bu6g80q' },
+  hikitoki: { name: 'ひもときプラン',               price: '98,000円（税別・税込107,800円）',  link: 'https://buy.stripe.com/28E4gz65h19Tb3E9jC6g80r' },
+  tsumugi:  { name: 'つむぎプラン',                 price: '198,000円（税別・税込217,800円）', link: 'https://buy.stripe.com/7sY7sLalx6ud6No9jC6g80s' },
   entry:    { name: 'エントリープラン',             price: '150,000円（税別・税込165,000円）', link: 'https://buy.stripe.com/bJe6oH79l19T4Fg0N66g80e' },
   standard: { name: 'スタンダードプラン',           price: '398,000円（税別・税込437,800円）', link: 'https://buy.stripe.com/7sYcN59htbOxdbManG6g80f' },
   heritage: { name: '継承プラン',                    price: '500,000円（税別・税込550,000円）', link: 'https://buy.stripe.com/3cIaEX8dp5q9c7IbrK6g80h' },
