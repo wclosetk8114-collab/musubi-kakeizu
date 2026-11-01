@@ -66,7 +66,7 @@ td{border:1px solid #CBBF9F;padding:2.6mm}td.n{text-align:right;white-space:nowr
  <div><div class="to">${to}</div><p style="margin:4mm 0 0;font-size:9.5pt">下記のとおりご請求申し上げます。</p></div>
  <div class="meta">請求書番号：${esc(o.no)}<br>発行日：${jst(issued)}<br>お支払い期限：${jst(due)}</div>
 </div>
-<div class="from"><b>結び 家系図</b><br>代表　土屋 千穂<br>〒105-6234 東京都港区愛宕2丁目5-1<br>愛宕グリーンヒルズMORIタワー34階<br>w.closet.k8114@gmail.com</div>
+<div class="from"><b>結び 家系図</b><br>代表　土屋 千穂<br>〒213-0023 神奈川県川崎市高津区子母口354-2<br>エゴステライバ 101<br>w.closet.k8114@gmail.com</div>
 <div class="total"><span>ご請求金額</span><b>¥${yen(total)}-</b><small>（税込）</small></div>
 <table>
 <tr><th style="width:52%">品目</th><th>数量</th><th>単価（税別）</th><th>金額（税別）</th></tr>
