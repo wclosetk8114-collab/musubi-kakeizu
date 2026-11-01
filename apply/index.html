@@ -96,7 +96,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
       <legend>お支払い方法</legend>
       <div class="choice">
         <label><input type="radio" name="pay" value="card" checked><div><b>クレジットカード（一括・分割）</b><span>送信後すぐにお支払いいただけます。分割をご希望の場合は、お支払いのあとにカード会社の「あとから分割」をご利用ください。</span></div></label>
-        <label><input type="radio" name="pay" value="invoice"><div><b>請求書（銀行振込）</b><span>会社名宛ての請求書をLINEでお送りします。</span></div></label>
+        <label><input type="radio" name="pay" value="invoice"><div><b>請求書（銀行振込）</b><span>送信後すぐに、会社名宛ての請求書をお出しします。お支払い期限は発行日から2週間です。</span></div></label>
       </div>
     </fieldset>
     <fieldset>
@@ -114,6 +114,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     <h2>お申込みを受け付けました</h2>
     <p id="doneText">ありがとうございます。</p>
     <a class="pay" id="payBtn" href="#" hidden>お支払いへ進む</a>
+    <a class="pay" id="invBtn" href="#" target="_blank" rel="noopener" hidden style="background:var(--ai);box-shadow:0 5px 0 var(--ai-deep)">請求書を開く</a>
     <div id="lineBox" hidden style="margin-top:6px">
       <p style="margin:0 0 6px;font-size:13px;color:var(--ink-2)">申込番号</p>
       <p id="code" style="font-family:var(--mincho);font-size:26px;font-weight:700;letter-spacing:.12em;margin:0 0 16px"></p>
@@ -160,10 +161,11 @@ f.addEventListener('submit',async e=>{
       document.getElementById('lineAdd').href=j.lineAdd;
       document.getElementById('lineSend').href=j.lineUrl;
       if(j.payUrl){document.getElementById('payAltA').href=j.payUrl;document.getElementById('payAlt').hidden=false;}
+      if(j.invUrl){const b=document.getElementById('invBtn');b.href=j.invUrl;b.hidden=false;txt.textContent='ありがとうございます。請求書はこちらからご覧いただけます（PDFで保存できます）。';}
       document.getElementById('lineBox').hidden=false;
     }
     else if(j.payUrl){txt.textContent='LINEにもお支払いのご案内をお送りしました。下のボタンからもお支払いいただけます。';const a=document.getElementById('payBtn');a.href=j.payUrl;a.hidden=false;}
-    else{txt.textContent='請求書を2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。';}
+    else{txt.textContent='LINEにも請求書をお送りしました。お支払い期限は発行日から2週間です。お振込みが確認できしだい、委任状をお送りします。';if(j.invUrl){const b=document.getElementById('invBtn');b.href=j.invUrl;b.hidden=false;}}
     scrollTo({top:0,behavior:'smooth'});
   }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent='この内容で申し込む';}
 });

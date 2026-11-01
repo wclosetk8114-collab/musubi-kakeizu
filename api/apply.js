@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const { LINE_ID, LINE_ADD, PLANS, ININJO, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
 
+const { invoiceUrl } = require('./invoice');
 const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望', referrer: 'ご紹介者', ref: '紹介コード' };
 
 /** 税抜の金額。紹介料はここから計算する（台帳側で 率をかける） */
@@ -57,6 +58,8 @@ module.exports = async (req, res) => {
     payUrl = u.toString();
   }
 
+  const invUrl = card ? null : invoiceUrl({ no: code, plan: d.plan, company: String(d.company || '').trim(), title: String(d.title || '').trim(), name: String(d.name).trim() });
+
   const summary = Object.keys(LABEL)
     .filter((k) => String(d[k] || '').trim())
     .map((k) => `${LABEL[k]}：${k === 'pay' ? (card ? 'カード' : PAYNAME[d.pay]) : String(d[k]).trim()}`)
@@ -65,7 +68,7 @@ module.exports = async (req, res) => {
   const refCode = String(d.ref || '').trim().toUpperCase();
   const refLine = (String(d.referrer||'').trim() || refCode)
     ? `\n★紹介あり：${String(d.referrer||'').trim()}${refCode ? ' / ' + refCode : ''}` : '';
-  await notifyAdmin(`【新しいお申込み】申込番号 ${code}${refLine}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}\n\n▼委任状の印刷：${ININJO}\n（「運営用」の欄にこの通知を貼り付けると、自動で入ります）`);
+  await notifyAdmin(`【新しいお申込み】申込番号 ${code}${refLine}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}\n\n▼委任状の印刷：${ININJO}\n（「運営用」の欄にこの通知を貼り付けると、自動で入ります）${invUrl ? '\n\n▼お送りした請求書：' + invUrl : ''}`);
 
   // 紹介の台帳に残す。入金の確認と紹介料の計算は、運営コンソールの「紹介料」で行う
   await logReferral(refCode, d.plan, d.name, d.email);
@@ -75,14 +78,14 @@ module.exports = async (req, res) => {
     if (card) {
       msgs.push({ type: 'template', altText: 'お支払いはこちら', template: { type: 'buttons', text: 'こちらからカードでお支払いいただけます。お支払いが確認できしだい、委任状をお送りします。', actions: [{ type: 'uri', label: 'お支払いへ進む', uri: payUrl }] } });
     } else {
-      msgs.push({ type: 'text', text: '請求書をこのLINEで2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。' });
+      msgs.push({ type: 'template', altText: '請求書をお送りします', template: { type: 'buttons', text: '請求書をお送りします。お支払い期限は発行日から2週間です。お振込みが確認できしだい、委任状をお送りします。', actions: [{ type: 'uri', label: '請求書を開く', uri: invUrl }] } });
     }
     await push(userId, msgs);
   }
   let lineUrl = null;
   if (!userId) {
-    const msg = `【申込番号】${code}\nお名前：${String(d.name).trim()}\nプラン：${plan.name}\nお支払い：${card ? 'カード' : '銀行振込'}`;
+    const msg = `【申込番号】${code}\nお名前：${String(d.name).trim()}\nプラン：${plan.name}\nお支払い：${card ? 'カード' : '銀行振込'}${invUrl ? '\n請求書：' + invUrl : ''}`;
     lineUrl = `https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(msg)}`;
   }
-  res.status(200).json({ ok: true, payUrl, linked: !!userId, code, lineUrl, lineAdd: LINE_ADD });
+  res.status(200).json({ ok: true, payUrl, linked: !!userId, code, lineUrl, lineAdd: LINE_ADD, invUrl });
 };

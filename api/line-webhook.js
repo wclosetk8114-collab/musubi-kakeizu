@@ -39,7 +39,9 @@ async function linkApplication(ev, userId, code, t) {
     u.searchParams.set('client_reference_id', userId);
     msgs.push({ type: 'template', altText: 'お支払いはこちら', template: { type: 'buttons', text: `${plan.name}\n${plan.price}\nまだお支払いがお済みでない方は、こちらからどうぞ。`.slice(0, 160), actions: [{ type: 'uri', label: 'お支払いへ進む', uri: u.toString() }] } });
   } else if (!card) {
-    msgs.push({ type: 'text', text: 'お振込先を、このLINEで2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。' });
+    const inv = (t.match(/https:\/\/\S+\/api\/invoice\?\S+/) || [])[0];
+    if (inv) msgs.push({ type: 'template', altText: '請求書をお送りします', template: { type: 'buttons', text: '請求書をお送りします。お支払い期限は発行日から2週間です。お振込みが確認できしだい、委任状をお送りします。', actions: [{ type: 'uri', label: '請求書を開く', uri: inv }] } });
+    else msgs.push({ type: 'text', text: 'お振込先を、このLINEで2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。' });
   }
   await reply(ev.replyToken, msgs);
   await notifyAdmin(`【LINEとつながりました】申込番号 ${code}\n${nm}${plan ? '／' + plan.name : ''}／${card ? 'カード' : '銀行振込'}\nLINEのID：${userId}`);
