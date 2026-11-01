@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/keiei", "destination": "/index.html" },
+    { "source": "/keiei/", "destination": "/index.html" },
+    { "source": "/kojin", "destination": "/hajimari/index.html" },
+    { "source": "/kojin/", "destination": "/hajimari/index.html" }
+  ]
+}
