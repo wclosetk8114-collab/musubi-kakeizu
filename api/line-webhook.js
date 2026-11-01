@@ -11,14 +11,18 @@ const quick = {
 };
 
 function applyMessage(userId) {
+  const tk = makeToken(userId);
   return {
     type: 'template',
     altText: 'お申込みフォームはこちら',
     template: {
       type: 'buttons',
       title: 'お申込みフォーム',
-      text: 'ご本人さまの情報と、ご希望のプランをご入力ください（約3分）。',
-      actions: [{ type: 'uri', label: 'フォームを開く', uri: `${SITE}/apply/?t=${makeToken(userId)}` }],
+      text: 'あてはまる方を選んでください（入力は約3分）。',
+      actions: [
+        { type: 'uri', label: '経営者の方', uri: `${SITE}/apply/?t=${tk}` },
+        { type: 'uri', label: '個人・ご家族の方', uri: `${SITE}/apply/kojin/?t=${tk}` },
+      ],
     },
   };
 }
