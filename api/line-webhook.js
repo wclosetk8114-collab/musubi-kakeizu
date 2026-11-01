@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { SITE, ININJO, TIMEREX, rawBody, safeEq, makeToken, reply, notifyAdmin } = require('./_lib');
+const { PLANS, SITE, ININJO, TIMEREX, rawBody, safeEq, makeToken, reply, push, notifyAdmin } = require('./_lib');
 
 const quick = {
   items: [
@@ -27,6 +27,24 @@ function applyMessage(userId) {
   };
 }
 
+/** LPから申し込んだ人が、LINEで申込番号を送ってきたとき。ここでLINEとつながる */
+async function linkApplication(ev, userId, code, t) {
+  const nm = (t.match(/お名前[:：]\s*(.+)/) || [])[1] || '';
+  const card = !/お支払い[:：]\s*銀行振込/.test(t);
+  const key = Object.keys(PLANS).sort((a, b) => PLANS[b].name.length - PLANS[a].name.length).find((k) => t.includes(PLANS[k].name));
+  const plan = key && PLANS[key];
+  const msgs = [{ type: 'text', text: `${nm ? nm.trim() + 'さま\n' : ''}LINEのご登録ありがとうございます。\nお申込み（申込番号 ${code}）とこのLINEがつながりました。\n\nこの先のご案内（お支払いの確認・委任状・進み具合）は、このLINEでお送りします。` }];
+  if (plan && card) {
+    const u = new URL(plan.link);
+    u.searchParams.set('client_reference_id', userId);
+    msgs.push({ type: 'template', altText: 'お支払いはこちら', template: { type: 'buttons', text: `${plan.name}\n${plan.price}\nまだお支払いがお済みでない方は、こちらからどうぞ。`.slice(0, 160), actions: [{ type: 'uri', label: 'お支払いへ進む', uri: u.toString() }] } });
+  } else if (!card) {
+    msgs.push({ type: 'text', text: 'お振込先を、このLINEで2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。' });
+  }
+  await reply(ev.replyToken, msgs);
+  await notifyAdmin(`【LINEとつながりました】申込番号 ${code}\n${nm}${plan ? '／' + plan.name : ''}／${card ? 'カード' : '銀行振込'}\nLINEのID：${userId}`);
+}
+
 async function handle(ev) {
   const userId = ev.source && ev.source.userId;
   if (ev.type === 'follow') {
@@ -41,6 +59,8 @@ async function handle(ev) {
   if (/^管理者ID$/.test(t)) {
     return reply(ev.replyToken, [{ type: 'text', text: `あなたのIDです：\n${userId}` }]);
   }
+  const m = t.match(/申込番号[】:：\s]*(M-[A-Z0-9]{6})/);
+  if (m) return linkApplication(ev, userId, m[1], t);
   if (/申込|申し込/.test(t)) return reply(ev.replyToken, [applyMessage(userId)]);
   if (/相談|予約/.test(t)) {
     return reply(ev.replyToken, [{ type: 'text', text: `無料相談はこちらからご予約いただけます（Zoom・最大60分）。\n${TIMEREX}`, quickReply: quick }]);

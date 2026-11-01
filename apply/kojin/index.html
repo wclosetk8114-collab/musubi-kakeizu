@@ -50,8 +50,8 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 <main>
   <h1>お申込みフォーム</h1>
   <p class="lead" style="margin:-2px 0 6px;color:var(--gold-dk);font-weight:700">個人・ご家族の方</p>
-  <p class="lead">ご入力は3分ほどです。<br><a href="/apply/" style="color:var(--ink-2);font-size:13px">経営者の方はこちら</a><br>送信すると、LINEにお支払いのご案内が届きます。</p>
-  <div class="warn" id="nolink" hidden>このページはLINEから開くと、お申込み内容がLINEに届きます。公式LINEで「申込み」と送ると、専用のリンクが届きます。</div>
+  <p class="lead">ご入力は3分ほどです。<br><a href="/apply/" style="color:var(--ink-2);font-size:13px">経営者の方はこちら</a><br>送信したあと、公式LINEでお支払いのご案内をお送りします。</p>
+  
   <form id="f" novalidate>
     <fieldset>
       <legend>ご本人さまの情報</legend>
@@ -107,12 +107,20 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     <h2>お申込みを受け付けました</h2>
     <p id="doneText">ありがとうございます。</p>
     <a class="pay" id="payBtn" href="#" hidden>お支払いへ進む</a>
+    <div id="lineBox" hidden style="margin-top:6px">
+      <p style="margin:0 0 6px;font-size:13px;color:var(--ink-2)">申込番号</p>
+      <p id="code" style="font-family:var(--mincho);font-size:26px;font-weight:700;letter-spacing:.12em;margin:0 0 16px"></p>
+      <p style="font-size:14px;margin:0 0 14px;text-align:left">最後に、公式LINEで申込番号を送ってください。<b>お支払いのご案内も、このあとの連絡も、すべてLINEに届きます。</b></p>
+      <a class="pay" id="lineAdd" href="#" target="_blank" rel="noopener" style="background:#06C755;box-shadow:0 5px 0 #04913E;display:block;margin-top:8px">① 公式LINEを友だち追加</a>
+      <a class="pay" id="lineSend" href="#" style="background:#06C755;box-shadow:0 5px 0 #04913E;display:block;margin-top:14px">② 申込番号をLINEで送る</a>
+      <p style="font-size:12px;color:var(--ink-2);margin:12px 0 0">②を押すと、番号が入った状態でLINEが開きます。そのまま送信してください。</p>
+      <p id="payAlt" hidden style="font-size:13px;margin:22px 0 0">LINEを使わない方は<a id="payAltA" href="#">こちらからお支払い</a></p>
+    </div>
   </div>
 </main>
 <script>
 const t=new URLSearchParams(location.search).get('t')||'';
 (function(){var pl=new URLSearchParams(location.search).get('plan');if(pl){var el=document.getElementById('plan-'+pl);if(el)el.checked=true;}})();
-if(!t)document.getElementById('nolink').hidden=false;
 /* 紹介コードを運ぶ。リンクで来た人は ?ref=P-XXXXXX が付いている。
    LINEを一度はさむと URL が切れるので、トップで覚えた値も見る（localStorage）。
    それでも切れることがあるので、画面にも「紹介コード」の欄を出してある。 */
@@ -139,7 +147,15 @@ f.addEventListener('submit',async e=>{
     try{localStorage.setItem('musubi.ininjo',JSON.stringify({name:d.name,kana:d.kana,zip:d.zip,phone:d.phone,address:d.address,honseki:d.honseki,line:d.line,parents:d.parents}));}catch(e){}
     f.hidden=true;document.getElementById('done').hidden=false;
     const txt=document.getElementById('doneText');
-    if(j.payUrl){txt.textContent=j.linked?'LINEにもお支払いのご案内をお送りしました。下のボタンからもお支払いいただけます。':'下のボタンからカードでお支払いいただけます。';const a=document.getElementById('payBtn');a.href=j.payUrl;a.hidden=false;}
+    if(!j.linked&&j.lineUrl){
+      txt.textContent='ありがとうございます。';
+      document.getElementById('code').textContent=j.code;
+      document.getElementById('lineAdd').href=j.lineAdd;
+      document.getElementById('lineSend').href=j.lineUrl;
+      if(j.payUrl){document.getElementById('payAltA').href=j.payUrl;document.getElementById('payAlt').hidden=false;}
+      document.getElementById('lineBox').hidden=false;
+    }
+    else if(j.payUrl){txt.textContent='LINEにもお支払いのご案内をお送りしました。下のボタンからもお支払いいただけます。';const a=document.getElementById('payBtn');a.href=j.payUrl;a.hidden=false;}
     else{txt.textContent='お振込先を2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。';}
     scrollTo({top:0,behavior:'smooth'});
   }catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent='この内容で申し込む';}

@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 
 const SITE = 'https://musubi-kakeizu.vercel.app';
+const LINE_ID = '@051jipos';
+const LINE_ADD = 'https://lin.ee/xJ1k4d9';
 const TIMEREX = 'https://timerex.net/s/w.closet.k8114_1f8a/95f54795';
 const PLANS = {
   hajimari: { name: 'はじまりプラン',               price: '69,800円（税別・税込76,780円）',   link: 'https://buy.stripe.com/6oUbJ1gJV05P0p07bu6g80q' },
@@ -50,4 +52,4 @@ const notifyAdmin = (text) => push(process.env.ADMIN_LINE_USER_ID, [{ type: 'tex
 
 const ININJO = `${SITE}/ininjo/`;
 
-module.exports = { SITE, ININJO, TIMEREX, PLANS, rawBody, safeEq, makeToken, readToken, reply, push, notifyAdmin };
+module.exports = { LINE_ID, LINE_ADD, SITE, ININJO, TIMEREX, PLANS, rawBody, safeEq, makeToken, readToken, reply, push, notifyAdmin };

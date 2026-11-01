@@ -1,4 +1,5 @@
-const { PLANS, ININJO, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
+const crypto = require('crypto');
+const { LINE_ID, LINE_ADD, PLANS, ININJO, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
 
 const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望', referrer: 'ご紹介者', ref: '紹介コード' };
 
@@ -44,11 +45,14 @@ module.exports = async (req, res) => {
   if (!d.agree) return res.status(400).json({ error: '個人情報の取り扱いへの同意にチェックを入れてください。' });
 
   const card = d.pay !== 'invoice';
+  // LINEを通らずにLPから申し込んだ人には「申込番号」を出す。LINEでこの番号を送ってもらうと、LINEとつながる
+  const ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const code = 'M-' + Array.from(crypto.randomBytes(6), (b) => ABC[b % ABC.length]).join('');
   const PAYNAME = { invoice: '請求書（銀行振込）' };
   let payUrl = null;
   if (card) {
     const u = new URL(plan.link);
-    if (userId) u.searchParams.set('client_reference_id', userId);
+    u.searchParams.set('client_reference_id', userId || code);
     if (d.email) u.searchParams.set('prefilled_email', String(d.email).trim());
     payUrl = u.toString();
   }
@@ -61,7 +65,7 @@ module.exports = async (req, res) => {
   const refCode = String(d.ref || '').trim().toUpperCase();
   const refLine = (String(d.referrer||'').trim() || refCode)
     ? `\n★紹介あり：${String(d.referrer||'').trim()}${refCode ? ' / ' + refCode : ''}` : '';
-  await notifyAdmin(`【新しいお申込み】${refLine}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}\n\n▼委任状の印刷：${ININJO}\n（「運営用」の欄にこの通知を貼り付けると、自動で入ります）`);
+  await notifyAdmin(`【新しいお申込み】申込番号 ${code}${refLine}\nプラン：${plan.name} ${plan.price}\n${summary}\nLINE連携：${userId ? 'あり' : 'なし'}\n\n▼委任状の印刷：${ININJO}\n（「運営用」の欄にこの通知を貼り付けると、自動で入ります）`);
 
   // 紹介の台帳に残す。入金の確認と紹介料の計算は、運営コンソールの「紹介料」で行う
   await logReferral(refCode, d.plan, d.name, d.email);
@@ -75,5 +79,10 @@ module.exports = async (req, res) => {
     }
     await push(userId, msgs);
   }
-  res.status(200).json({ ok: true, payUrl, linked: !!userId });
+  let lineUrl = null;
+  if (!userId) {
+    const msg = `【申込番号】${code}\nお名前：${String(d.name).trim()}\nプラン：${plan.name}\nお支払い：${card ? 'カード' : '銀行振込'}`;
+    lineUrl = `https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(msg)}`;
+  }
+  res.status(200).json({ ok: true, payUrl, linked: !!userId, code, lineUrl, lineAdd: LINE_ADD });
 };

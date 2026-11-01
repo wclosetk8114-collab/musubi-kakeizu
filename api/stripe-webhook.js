@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     const userId = s.client_reference_id;
     const name = (s.customer_details && s.customer_details.name) || '';
     const amount = (s.amount_total || 0).toLocaleString('ja-JP');
-    await notifyAdmin(`【お支払い完了】\n${name}さま　${amount}円（税込）\nメール：${(s.customer_details && s.customer_details.email) || ''}\nLINE連携：${userId ? 'あり' : 'なし'}\n\n▼次は委任状の郵送です：${ININJO}`);
+    await notifyAdmin(`【お支払い完了】\n${name}さま　${amount}円（税込）\nメール：${(s.customer_details && s.customer_details.email) || ''}\n${/^M-/.test(userId || '') ? '申込番号：' + userId + '（LINEで番号が届くとつながります）' : 'LINE連携：' + (userId ? 'あり' : 'なし')}\n\n▼次は委任状の郵送です：${ININJO}`);
     if (userId && /^U[0-9a-f]{32}$/.test(userId)) {
       await push(userId, [{
         type: 'text',
