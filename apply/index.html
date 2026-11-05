@@ -120,10 +120,9 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     <div id="lineBox" hidden style="margin-top:6px">
       <p style="margin:0 0 6px;font-size:13px;color:var(--ink-2)">申込番号</p>
       <p id="code" style="font-family:var(--mincho);font-size:26px;font-weight:700;letter-spacing:.12em;margin:0 0 16px"></p>
-      <p style="font-size:14px;margin:0 0 14px;text-align:left">最後に、公式LINEで申込番号を送ってください。<b>お支払いのご案内も、このあとの連絡も、すべてLINEに届きます。</b></p>
-      <a class="pay" id="lineAdd" href="#" target="_blank" rel="noopener" style="background:#06C755;box-shadow:0 5px 0 #04913E;display:block;margin-top:8px">① 公式LINEを友だち追加</a>
-      <a class="pay" id="lineSend" href="#" style="background:#06C755;box-shadow:0 5px 0 #04913E;display:block;margin-top:14px">② 申込番号をLINEで送る</a>
-      <p style="font-size:12px;color:var(--ink-2);margin:12px 0 0">②を押すと、番号が入った状態でLINEが開きます。そのまま送信してください。</p>
+      <p id="lineLead" style="font-size:14px;margin:0 0 14px;text-align:left">下のボタンを押すとLINEが開きます。<b>入っているメッセージをそのまま送信</b>すると、LINEにお支払いのボタンが届きます。このあとのご連絡も、すべてLINEで行います。</p>
+      <a class="pay" id="lineSend" href="#" style="background:#06C755;box-shadow:0 5px 0 #04913E;display:block;margin-top:8px">LINEでお支払いへ進む</a>
+      <p style="font-size:12px;color:var(--ink-2);margin:12px 0 0">LINEの画面の上に「追加」が出たら、友だち追加もお願いします。<br>LINEが開かないときは <a id="lineAdd" href="#" target="_blank" rel="noopener">公式LINEを友だち追加</a> して、申込番号を送ってください。</p>
       <p id="payAlt" hidden style="font-size:13px;margin:22px 0 0">LINEを使わない方は<a id="payAltA" href="#">こちらからお支払い</a></p>
     </div>
   </div>
@@ -164,7 +163,10 @@ f.addEventListener('submit',async e=>{
       document.getElementById('lineSend').href=j.lineUrl;
       if(j.payUrl){document.getElementById('payAltA').href=j.payUrl;document.getElementById('payAlt').hidden=false;}
       if(j.invUrl){const b=document.getElementById('invBtn');b.href=j.invUrl;b.hidden=false;txt.textContent='ありがとうございます。請求書はこちらからご覧いただけます（PDFで保存できます）。';}
+      if(!j.payUrl){document.getElementById('lineSend').textContent='LINEで請求書を受け取る';document.getElementById('lineLead').innerHTML='下のボタンを押すとLINEが開きます。<b>入っているメッセージをそのまま送信</b>すると、LINEに請求書が届きます。このあとのご連絡も、すべてLINEで行います。';}
       document.getElementById('lineBox').hidden=false;
+      // スマホなら、そのままLINEを開く（メッセージは入った状態。送信だけ押してもらう）
+      if(/iPhone|iPad|Android/i.test(navigator.userAgent)){setTimeout(function(){location.href=j.lineUrl;},1500);}
     }
     else if(j.payUrl){txt.textContent='LINEにもお支払いのご案内をお送りしました。下のボタンからもお支払いいただけます。';const a=document.getElementById('payBtn');a.href=j.payUrl;a.hidden=false;}
     else{txt.textContent='LINEにも請求書をお送りしました。お支払い期限は発行日から2週間です。お振込みが確認できしだい、委任状をお送りします。';if(j.invUrl){const b=document.getElementById('invBtn');b.href=j.invUrl;b.hidden=false;}}
