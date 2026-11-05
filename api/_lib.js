@@ -50,6 +50,25 @@ const reply = (replyToken, messages) => lineCall('message/reply', { replyToken, 
 const push = (to, messages) => to ? lineCall('message/push', { to, messages }) : Promise.resolve();
 const notifyAdmin = (text) => push(process.env.ADMIN_LINE_USER_ID, [{ type: 'text', text: text.slice(0, 4900) }]);
 
+/** 申込番号。M- のあとの1文字目にプランと支払い方法、最後の1文字に確かめ用の文字を入れる。
+ *  お客さまが番号だけをLINEに打ってきても、どのプラン・どの払い方かがわかる。 */
+const ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const PLAN_KEYS = ['hajimari', 'hikitoki', 'tsumugi', 'entry', 'standard', 'heritage', 'monitor'];
+function codeCheck(body) { return ABC[crypto.createHmac('sha256', process.env.APP_SECRET || '').update('code:' + body).digest()[0] % ABC.length]; }
+function makeCode(planKey, invoice) {
+  const i = PLAN_KEYS.indexOf(planKey);
+  const head = i < 0 ? ABC[31] : ABC[i * 2 + (invoice ? 1 : 0)];
+  const body = head + Array.from(crypto.randomBytes(4), (b) => ABC[b % ABC.length]).join('');
+  return 'M-' + body + codeCheck(body);
+}
+function readCode(code) {
+  const c = String(code || '').toUpperCase().replace(/^M-/, '');
+  if (!/^[A-Z0-9]{6}$/.test(c) || codeCheck(c.slice(0, 5)) !== c[5]) return null;
+  const i = ABC.indexOf(c[0]);
+  if (i < 0 || i >= PLAN_KEYS.length * 2) return null;
+  return { plan: PLAN_KEYS[i >> 1], invoice: !!(i & 1) };
+}
+
 const ININJO = `${SITE}/ininjo/`;
 
-module.exports = { LINE_ID, LINE_ADD, SITE, ININJO, TIMEREX, PLANS, rawBody, safeEq, makeToken, readToken, reply, push, notifyAdmin };
+module.exports = { makeCode, readCode, LINE_ID, LINE_ADD, SITE, ININJO, TIMEREX, PLANS, rawBody, safeEq, makeToken, readToken, reply, push, notifyAdmin };

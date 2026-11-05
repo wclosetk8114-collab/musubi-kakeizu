@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { LINE_ID, LINE_ADD, PLANS, ININJO, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
+const { makeCode, LINE_ID, LINE_ADD, PLANS, ININJO, TIMEREX, rawBody, readToken, push, notifyAdmin } = require('./_lib');
 
 const { invoiceUrl } = require('./invoice');
 const LABEL = { name: 'お名前', kana: 'ふりがな', company: '会社名', title: '役職', phone: '電話番号', email: 'メール', zip: '郵便番号', address: '住所', honseki: '本籍地（わかる範囲）', parents: 'ご両親のお名前', line: '調べたい家系', pay: 'お支払い方法', note: 'ご要望', referrer: 'ご紹介者', ref: '紹介コード' };
@@ -47,8 +47,7 @@ module.exports = async (req, res) => {
 
   const card = d.pay !== 'invoice';
   // LINEを通らずにLPから申し込んだ人には「申込番号」を出す。LINEでこの番号を送ってもらうと、LINEとつながる
-  const ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  const code = 'M-' + Array.from(crypto.randomBytes(6), (b) => ABC[b % ABC.length]).join('');
+  const code = makeCode(d.plan, !card);
   const PAYNAME = { invoice: '請求書（銀行振込）' };
   let payUrl = null;
   if (card) {

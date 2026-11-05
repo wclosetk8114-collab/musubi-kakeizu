@@ -1,11 +1,11 @@
 const crypto = require('crypto');
-const { PLANS, SITE, ININJO, TIMEREX, rawBody, safeEq, makeToken, reply, push, notifyAdmin } = require('./_lib');
+const { readCode, PLANS, SITE, ININJO, TIMEREX, rawBody, safeEq, makeToken, reply, push, notifyAdmin } = require('./_lib');
 
 const quick = {
   items: [
     { type: 'action', action: { type: 'uri', label: '無料相談を予約', uri: TIMEREX } },
     { type: 'action', action: { type: 'message', label: 'お申込み', text: '申込み' } },
-    { type: 'action', action: { type: 'uri', label: '料金を見る', uri: `${SITE}/#plan` } },
+    { type: 'action', action: { type: 'message', label: '料金を見る', text: '料金' } },
     { type: 'action', action: { type: 'message', label: '委任状について', text: '委任状' } },
   ],
 };
@@ -30,8 +30,9 @@ function applyMessage(userId) {
 /** LPから申し込んだ人が、LINEで申込番号を送ってきたとき。ここでLINEとつながる */
 async function linkApplication(ev, userId, code, t) {
   const nm = (t.match(/お名前[:：]\s*(.+)/) || [])[1] || '';
-  const card = !/お支払い[:：]\s*銀行振込/.test(t);
-  const key = Object.keys(PLANS).sort((a, b) => PLANS[b].name.length - PLANS[a].name.length).find((k) => t.includes(PLANS[k].name));
+  const info = readCode(code); // 番号だけ送られてきても、ここでプランと払い方がわかる
+  const card = info ? !info.invoice : !/お支払い[:：]\s*銀行振込/.test(t);
+  const key = (info && info.plan) || Object.keys(PLANS).sort((a, b) => PLANS[b].name.length - PLANS[a].name.length).find((k) => t.includes(PLANS[k].name));
   const plan = key && PLANS[key];
   const msgs = [{ type: 'text', text: `${nm ? nm.trim() + 'さま\n' : ''}LINEのご登録ありがとうございます。\nお申込み（申込番号 ${code}）とこのLINEがつながりました。\n\nこの先のご案内（お支払いの確認・委任状・進み具合）は、このLINEでお送りします。` }];
   if (plan && card) {
@@ -41,10 +42,12 @@ async function linkApplication(ev, userId, code, t) {
   } else if (!card) {
     const inv = (t.match(/https:\/\/\S+\/api\/invoice\?\S+/) || [])[0];
     if (inv) msgs.push({ type: 'template', altText: '請求書をお送りします', template: { type: 'buttons', text: '請求書をお送りします。お支払い期限は発行日から2週間です。お振込みが確認できしだい、委任状をお送りします。', actions: [{ type: 'uri', label: '請求書を開く', uri: inv }] } });
-    else msgs.push({ type: 'text', text: 'お振込先を、このLINEで2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。' });
+    else msgs.push({ type: 'text', text: '請求書を、このLINEで2営業日以内にお送りします。お振込みが確認できしだい、委任状をお送りします。' });
   }
   await reply(ev.replyToken, msgs);
-  await notifyAdmin(`【LINEとつながりました】申込番号 ${code}\n${nm}${plan ? '／' + plan.name : ''}／${card ? 'カード' : '銀行振込'}\nLINEのID：${userId}`);
+  const todo = !plan ? '\n\n⚠ プランがわからず、お支払いボタンは送れていません。お支払いが済んでいなければ、決済リンクをLINEで送ってください。'
+    : (!card && !/api\/invoice/.test(t)) ? '\n\n⚠ 請求書のリンクはまだ送れていません。申込み通知の「▼お送りした請求書」のリンクを、このお客さまのLINEに送ってください。' : '';
+  await notifyAdmin(`【LINEとつながりました】申込番号 ${code}\n${nm}${plan ? '／' + plan.name : ''}／${card ? 'カード' : '銀行振込'}\nLINEのID：${userId}${todo}`);
 }
 
 async function handle(ev) {
@@ -78,8 +81,17 @@ async function handle(ev) {
       quickReply: quick,
     }]);
   }
-  if (/料金|値段|価格|モニター|プラン/.test(t)) {
-    return reply(ev.replyToken, [{ type: 'text', text: '【一般向け】\n■ はじまり　69,800円（税別・税込76,780円）\n直系4代前までの家系図／PDF納品／納期1〜2ヶ月\n\n■ ひもとき　98,000円（税別・税込107,800円）\nはじまりの内容＋和紙に印刷した家系図（A3）＋解説書／納期1〜2ヶ月\n\n■ つむぎ　198,000円（税別・税込217,800円）\n5〜7代前まで／和紙印刷A3＋PDF／解説書／解説セッション（Zoom30分）／動画（約30秒）／納期2〜3ヶ月\n\n詳しくは：https://musubi-kakeizu.vercel.app/hajimari/\n\n【経営者向け】\n■ エントリープラン　150,000円（税別・税込165,000円）\n直系4代前まで／データ納品＋解説書＋読み解きセッション（Zoom45分）＋動画（約30秒）／納期1〜2ヶ月\n\n■ スタンダードプラン　398,000円（税別・税込437,800円）\n5〜7代前まで／高級和紙のA3証書ファイル／解説書／ポイント解説（Zoom約90分）／動画（約1分半）／納期2〜3ヶ月\n\n■ 継承プラン　500,000円（税別・税込550,000円）\nスタンダードの内容＋家紋の額装＋ヒストリー動画（約3分）／納期3〜4ヶ月\n\n■ モニター価格（先着10名様）　300,000円（税別・税込330,000円）\nスタンダードプランを、ご感想をいただく条件でお受けします。\n\nどのプランも、戸籍の取り寄せは提携の行政書士が行います（委任状にご署名いただくだけです）。\nお支払いは、クレジットカード（一括・分割）・銀行振込からお選びいただけます。', quickReply: quick }]);
+  if (/料金.*個人|料金.*ご家族|個人.*料金/.test(t)) {
+    return reply(ev.replyToken, [{ type: 'text', text: '【個人・ご家族の方】\n■ はじまり　69,800円（税別・税込76,780円）\n直系4代前までの家系図／PDF納品／納期1〜2ヶ月\n\n■ ひもとき　98,000円（税別・税込107,800円）\nはじまりの内容＋和紙に印刷した家系図（A3）＋解説書／納期1〜2ヶ月\n\n■ つむぎ　198,000円（税別・税込217,800円）\n5〜7代前まで／和紙印刷A3＋PDF／解説書／解説セッション（Zoom30分）／動画（約30秒）／納期2〜3ヶ月\n\n詳しくは：https://musubi-kakeizu.vercel.app/kojin/\n\nどのプランも、戸籍の取り寄せは提携の行政書士が行います（委任状にご署名いただくだけです）。\nお支払いは、クレジットカード（一括・分割）・銀行振込からお選びいただけます。', quickReply: quick }]);
+  }
+  if (/料金.*経営者|経営者.*料金|モニター/.test(t)) {
+    return reply(ev.replyToken, [{ type: 'text', text: '【経営者向け】\n■ エントリープラン　150,000円（税別・税込165,000円）\n直系4代前まで／データ納品＋解説書＋読み解きセッション（Zoom45分）＋動画（約30秒）／納期1〜2ヶ月\n\n■ スタンダードプラン　398,000円（税別・税込437,800円）\n5〜7代前まで／高級和紙のA3証書ファイル／解説書／ポイント解説（Zoom約90分）／動画（約1分半）／納期2〜3ヶ月\n\n■ 継承プラン　500,000円（税別・税込550,000円）\nスタンダードの内容＋家紋の額装＋ヒストリー動画（約3分）／納期3〜4ヶ月\n\n■ モニター価格（先着10名様）　300,000円（税別・税込330,000円）\nスタンダードプランを、ご感想をいただく条件でお受けします。\n\n詳しくは：https://musubi-kakeizu.vercel.app/keiei/\n\nどのプランも、戸籍の取り寄せは提携の行政書士が行います（委任状にご署名いただくだけです）。\nお支払いは、クレジットカード（一括・分割）・銀行振込からお選びいただけます。', quickReply: quick }]);
+  }
+  if (/料金|値段|価格|プラン/.test(t)) {
+    return reply(ev.replyToken, [{ type: 'text', text: 'どちらの料金をご覧になりますか？', quickReply: { items: [
+      { type: 'action', action: { type: 'message', label: '経営者の方', text: '料金（経営者の方）' } },
+      { type: 'action', action: { type: 'message', label: '個人・ご家族の方', text: '料金（個人・ご家族の方）' } },
+    ] } }]);
   }
   await notifyAdmin(`【LINEメッセージ】\n${t}`);
 }
