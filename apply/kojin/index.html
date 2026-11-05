@@ -136,6 +136,8 @@ const t=new URLSearchParams(location.search).get('t')||'';
   if(code){try{localStorage.setItem('musubi.ref',code);}catch(e){}
            document.getElementById('ref').value=code.toUpperCase();}
   var by=q.get('by')||'';
+  if(by){try{localStorage.setItem('musubi.by',by);}catch(e){}}
+  else{try{by=localStorage.getItem('musubi.by')||'';}catch(e){}}
   if(by)document.getElementById('referrer').value=by;
 })();
 const f=document.getElementById('f'),err=document.getElementById('err'),btn=document.getElementById('send');

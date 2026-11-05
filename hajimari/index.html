@@ -555,6 +555,9 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
 (function(){try{
   var c=new URLSearchParams(location.search).get('ref')||'';
   if(/^P-[A-Za-z0-9]{4,12}$/.test(c))localStorage.setItem('musubi.ref',c.toUpperCase());
+  /* 紹介者の名前（?by=八田結愛 など）も覚えておく。申し込みフォームの「ご紹介者」欄に入る */
+  var by=(new URLSearchParams(location.search).get('by')||'').trim().slice(0,40);
+  if(by)localStorage.setItem('musubi.by',by);
 }catch(e){}})();
 </script>
 </body>
