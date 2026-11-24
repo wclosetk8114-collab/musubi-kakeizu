@@ -3,7 +3,7 @@ const { SITE, PLANS } = require('./_lib');
 
 /** 請求書。申込みのときに署名つきのリンクを作り、開くとその場で請求書を表示する（印刷→PDF保存できる）。
  *  中身はリンクに入っていて、署名が合わないと表示しない（金額や宛名を書きかえられないように）。 */
-const NET = { hajimari: 69800, hikitoki: 98000, tsumugi: 198000, entry: 150000, standard: 398000, heritage: 500000, monitor: 300000 };
+const NET = { hajimari: 69800, hikitoki: 98000, tsumugi: 198000, entry: 150000, standard: 199000, heritage: 250000, monitor: 300000 };
 const DESC = {
   hajimari: '直系4代前までの家系図／PDF納品',
   hikitoki: '直系4代前まで／和紙印刷A3＋PDF／解説書',
